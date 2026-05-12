@@ -1,0 +1,816 @@
+generator client {
+  provider      = "prisma-client-js"
+  // "native" allows it to run on your Mac/Laptop
+  // "rhel-openssl-1.1.x" is the specific driver for your AlmaLinux Server
+  binaryTargets = ["native", "rhel-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     Int       @id @default(autoincrement())
+  email                  String    @unique @db.VarChar(191)
+  password               String    @db.VarChar(255)
+  name                   String?   @db.VarChar(255)
+  role                   UserRole  @default(CUSTOMER)
+  emailVerified          Boolean   @default(false)
+  emailVerificationToken String?   @db.VarChar(255)
+  emailVerificationExpires DateTime?
+  passwordResetToken     String?   @db.VarChar(255)
+  passwordResetExpires   DateTime?
+  isActive               Boolean   @default(true)
+  loyaltyPoints          Int       @default(0)
+  phone                  String?   @db.VarChar(20)
+  address                String?   @db.Text
+  createdAt              DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt              DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  blogs                  Blog[]
+  bookings               Booking[]
+  carts                  Cart[]
+  eventAttendances       EventAttendee[]
+  events                 Event[]   @relation("EventOrganizer")
+  productPriceChanges    ProductPriceHistory[]
+  notifications          Notification[]
+  orders                 Order[]
+  reservations           Reservation[]
+  promotionUsages        PromotionUsage[]
+
+  @@index([email])
+  @@index([role])
+  @@index([isActive])
+  @@index([createdAt])
+  @@index([emailVerified])
+  @@index([role, isActive])
+  @@index([createdAt, role])
+  @@map("users")
+}
+
+model Cart {
+  id        Int       @id @default(autoincrement())
+  userId    Int?
+  sessionId String?   @unique @db.VarChar(191)
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  expiresAt DateTime? @db.Timestamp(6)
+  items     CartItem[]
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sessionId])
+  @@index([expiresAt])
+  @@map("carts")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  productId Int?     
+  menuId    Int?     
+  quantity  Int
+  price     Float    @db.Float
+  notes     String?  @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product? @relation(fields: [productId], references: [id])
+  menu      Menu?    @relation(fields: [menuId], references: [id])
+
+  @@index([cartId])
+  @@index([productId])
+  @@index([menuId])
+  @@map("cart_items")
+}
+
+model Menu {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(255)
+  slug            String?  @unique @db.VarChar(191)
+  description     String   @db.Text
+  price           Float    @db.Float 
+  category        String   @db.VarChar(100)
+  categoryId      Int?
+  type            String   @default("All") @db.VarChar(50) 
+  imageUrl        String   @db.VarChar(500)
+  isAvailable     Boolean  @default(true)
+  isSpecial       Boolean  @default(false)
+  preparationTime Int?     
+  dietaryNotes    String?  @db.Text 
+  allergenCodes   String?  @db.Text 
+  nutritionalInfo String?  @db.Text 
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime @default(now()) @updatedAt @db.Timestamp(6)
+   
+  categoryRef     Category? @relation("MenuCategory", fields: [categoryId], references: [id])
+  menuProducts    MenuProduct[] 
+  cartItems       CartItem[] 
+  orderItems      OrderItem[] 
+   
+  @@index([category])
+  @@index([type])
+  @@index([isAvailable])
+  @@index([categoryId])
+  @@index([slug])
+  @@map("menus")
+}
+
+model MenuProduct {
+  id        Int      @id @default(autoincrement())
+  menuId    Int
+  productId Int?      
+  quantity  Int      @default(1) 
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+   
+  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade) 
+   
+  @@unique([menuId, productId])
+  @@index([menuId])
+  @@index([productId])
+  @@map("menu_products")
+}
+
+model Product {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(191) 
+  slug            String?  @unique @db.VarChar(191) 
+  description     String?  @db.Text
+  price           Float    @db.Float
+  categoryId      Int?
+  category        String   @db.VarChar(100)
+  imageUrl        String?  @db.VarChar(500)
+  isAvailable     Boolean  @default(true)
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  allergenCodes   String?  @db.Text
+  availability    Int      @default(10) 
+  dietaryNotes    String?  @db.Text
+  type            String?  @db.VarChar(50)
+  isSpecial       Boolean  @default(false)
+  preparationTime Int?
+  nutritionalInfo String?  @db.Text
+  sku             String?  @unique @db.VarChar(100) 
+   
+  menuProducts    MenuProduct[] 
+  inventory       Inventory?
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  priceHistory    ProductPriceHistory[]
+  menuCategory    Category?           @relation("ProductCategory", fields: [categoryId], references: [id])
+  promotions      Promotion[]         @relation("promotionapplicableitems")
+
+  @@index([category])
+  @@index([type])
+  @@index([isAvailable])
+  @@index([isSpecial])
+  @@index([price])
+  @@index([createdAt])
+  @@index([availability])
+  @@index([category, type, isAvailable])
+  @@index([category, isAvailable])
+  @@index([price, isAvailable])
+  @@index([name])
+  @@index([categoryId])
+  @@index([slug])
+  @@map("products")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique @db.VarChar(100)
+  description String?   @db.Text
+  imageUrl    String?   @db.VarChar(500)
+  isActive    Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  type        String?   @db.VarChar(50)
+  menus       Menu[]    @relation("MenuCategory")
+  products    Product[] @relation("ProductCategory")
+
+  @@index([isActive])
+  @@index([sortOrder])
+  @@index([type])
+  @@map("categories")
+}
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  customerId      Int
+  tableId         Int?
+  status          OrderStatus @default(PENDING)
+  orderType       OrderType   @default(ONLINE)
+  total           Float       @db.Float
+  discountCode    String?     @db.VarChar(50)
+  discountAmount  Float?      @db.Float
+  deliveryFee     Float?      @db.Float
+  notes           String?     @db.Text
+  customerName    String?     @db.VarChar(255)
+  customerEmail   String?     @db.VarChar(255)
+  customerPhone   String?     @db.VarChar(20)
+  deliveryAddress String?     @db.Text
+  createdAt       DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime    @default(now()) @updatedAt @db.Timestamp(6)
+  bookings        Booking[]
+  items           OrderItem[]
+  customer        User        @relation(fields: [customerId], references: [id])
+  table           Table?      @relation(fields: [tableId], references: [id])
+  payment         Payment?
+
+  @@index([customerId])
+  @@index([tableId])
+  @@index([status])
+  @@index([orderType])
+  @@index([createdAt])
+  @@index([status, createdAt])
+  @@index([customerId, createdAt])
+  @@index([total])
+  @@index([orderType, status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id              Int      @id @default(autoincrement())
+  orderId         Int
+  productId       Int?
+  menuId          Int?     
+  quantity        Int
+  price           Float    @db.Float
+  specialRequests String?  @db.Text
+  order           Order    @relation(fields: [orderId], references: [id])
+  product         Product? @relation(fields: [productId], references: [id])
+  menu            Menu?    @relation(fields: [menuId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([menuId])
+  @@map("order_items")
+}
+
+model Promotion {
+  id                 Int             @id @default(autoincrement())
+  name               String          @db.VarChar(255)
+  code               String?         @unique @db.VarChar(50)
+  type               PromotionType   @default(PERCENTAGE)
+  discountType       DiscountType    @default(PERCENTAGE)
+  discountValue      Float           @db.Float
+  validFrom          DateTime        @default(now()) @db.Timestamp(6)
+  validTo            DateTime?       @db.Timestamp(6)
+  usageLimit         Int?
+  usedCount          Int             @default(0)
+  minOrderValue      Float?          @db.Float
+  maxDiscount        Float?          @db.Float
+  userLimit          Int?
+  firstOrderOnly     Boolean         @default(false)
+  description        String?         @db.Text
+  isActive           Boolean         @default(true)
+  applicableType     ApplicableType  @default(ALL_PRODUCTS)
+  categoryIds        String?         @db.Text 
+  productIds         String?         @db.Text 
+  bannerImageUrl     String?         @db.VarChar(500)
+  priority           Int             @default(0)
+  happyHourStart     String?         @db.VarChar(5) 
+  happyHourEnd       String?         @db.VarChar(5) 
+  happyHourDays      String?         @db.Text 
+  bogoBuyQuantity    Int?
+  bogoGetQuantity    Int?
+  bogoProductId      Int?
+  requiresCouponCode Boolean         @default(false)
+  autoApply          Boolean         @default(false)
+  createdAt          DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime        @default(now()) @updatedAt @db.Timestamp(6)
+  products           Product[]       @relation("promotionapplicableitems")
+  usages             PromotionUsage[]
+
+  @@index([code])
+  @@index([isActive])
+  @@index([validFrom])
+  @@index([validTo])
+  @@index([applicableType])
+  @@index([priority])
+  @@index([autoApply])
+  @@index([requiresCouponCode])
+  @@index([type])
+  @@map("promotions")
+}
+
+model PromotionUsage {
+  id          Int       @id @default(autoincrement())
+  promotionId Int
+  userId      Int
+  orderId     Int?
+  usedAt      DateTime  @default(now()) @db.Timestamp(6)
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([promotionId, userId])
+  @@index([promotionId])
+  @@index([userId])
+  @@index([orderId])
+  @@map("promotion_usage")
+}
+
+model Inventory {
+  id           Int       @id @default(autoincrement())
+  productId    Int       @unique
+  quantity     Int
+  minThreshold Int       @default(10)
+  supplier     String?   @db.VarChar(255)
+  lastRestocked DateTime? @db.Timestamp(6)
+  createdAt    DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  product      Product?  @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([quantity])
+  @@map("inventory")
+}
+
+model Payment {
+  id            Int           @id @default(autoincrement())
+  orderId       Int           @unique
+  amount        Float         @db.Float
+  method        PaymentMethod
+  status        PaymentStatus @default(PENDING)
+  transactionId String?       @db.VarChar(255)
+  createdAt     DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime      @default(now()) @updatedAt @db.Timestamp(6)
+  order         Order         @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("payments")
+}
+
+model Timeslot {
+  id        Int            @id @default(autoincrement())
+  date      DateTime       @db.Date
+  startTime String         @db.VarChar(5)
+  endTime   String         @db.VarChar(5)
+  capacity  Int            @default(10)
+  bookedCount Int          @default(0)
+  status    TimeslotStatus @default(AVAILABLE)
+  createdAt DateTime       @default(now()) @db.Timestamp(6)
+  updatedAt DateTime       @default(now()) @db.Timestamp(6)
+  bookings  Booking[]
+
+  @@index([date])
+  @@index([status])
+  @@index([startTime])
+  @@index([endTime])
+  @@map("timeslots")
+}
+
+model Booking {
+  id          Int            @id @default(autoincrement())
+  userId      Int
+  orderId     Int?
+  bookingType BookingType
+  date        DateTime       @db.Date
+  timeSlotId  Int
+  address     String?        @db.Text
+  status      BookingStatus  @default(PENDING)
+  paymentType PaymentType    @default(CASH)
+  notes       String?        @db.Text
+  createdAt   DateTime       @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime       @default(now()) @db.Timestamp(6)
+  payments    BookingPayment[]
+  order       Order?         @relation(fields: [orderId], references: [id])
+  timeSlot    Timeslot       @relation(fields: [timeSlotId], references: [id])
+  user        User           @relation(fields: [userId], references: [id])
+  notifications Notification[]
+
+  @@index([userId])
+  @@index([orderId])
+  @@index([timeSlotId])
+  @@index([status])
+  @@index([date])
+  @@index([bookingType])
+  @@index([date, status])
+  @@index([userId, date])
+  @@index([status, createdAt])
+  @@map("bookings")
+}
+
+model BookingPayment {
+  id          Int           @id @default(autoincrement())
+  bookingId   Int
+  amount      Float         @db.Float
+  paymentType PaymentType
+  status      PaymentStatus @default(PENDING)
+  transactionId String?     @db.VarChar(255)
+  createdAt   DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime      @default(now()) @updatedAt @db.Timestamp(6)
+  booking     Booking       @relation(fields: [bookingId], references: [id])
+
+  @@index([bookingId])
+  @@index([status])
+  @@map("booking_payments")
+}
+
+model Notification {
+  id        Int                @id @default(autoincrement())
+  bookingId Int
+  userId    Int
+  type      NotificationType
+  message   String             @db.Text
+  sentAt    DateTime?          @db.Timestamp(6)
+  status    NotificationStatus @default(PENDING)
+  createdAt DateTime           @default(now()) @db.Timestamp(6)
+  booking   Booking            @relation(fields: [bookingId], references: [id])
+  user      User               @relation(fields: [userId], references: [id])
+
+  @@index([bookingId])
+  @@index([userId])
+  @@index([status])
+  @@index([type])
+  @@map("notifications")
+}
+
+model BlogCategory {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(100)
+  slug        String   @unique @db.VarChar(100)
+  description String?  @db.Text
+  color       String?  @db.VarChar(20)
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  created_at  DateTime @default(now()) @db.Timestamp(6)
+  updated_at  DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  blogs       Blog[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([sortOrder])
+  @@map("blog_categories")
+}
+
+model Blog {
+  id              Int           @id @default(autoincrement())
+  title           String        @db.VarChar(255)
+  slug            String        @unique @db.VarChar(191) 
+  content         String        @db.LongText
+  featured_image  String?       @db.VarChar(500)
+  tags            String        @db.Text
+  published_status Boolean      @default(false)
+  meta_title      String?       @db.VarChar(255)
+  meta_description String?      @db.Text
+  author_id       Int?
+  category_id     Int?
+  created_at      DateTime      @default(now()) @db.Timestamp(6)
+  updated_at      DateTime      @default(now()) @updatedAt @db.Timestamp(6)
+  author          User?         @relation(fields: [author_id], references: [id])
+  category        BlogCategory? @relation(fields: [category_id], references: [id])
+
+  @@index([slug])
+  @@index([published_status])
+  @@index([author_id])
+  @@index([category_id])
+  @@index([created_at])
+  @@map("blogs")
+}
+
+model Team {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  role         String   @db.VarChar(255)
+  bio          String?  @db.Text
+  photo        String?  @db.VarChar(500)
+  social_links String?  @db.LongText
+  email        String?  @unique @db.VarChar(191) 
+  phone        String?  @db.VarChar(20)
+  created_at   DateTime @default(now()) @db.Timestamp(6)
+  updated_at   DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([email])
+  @@map("teams")
+}
+
+model Testimonial {
+  id          Int       @id @default(autoincrement())
+  client_name String    @db.VarChar(255)
+  designation String?   @db.VarChar(255)
+  feedback    String    @db.Text
+  rating      Int?
+  photo       String?   @db.VarChar(500)
+  company     String?   @db.VarChar(255)
+  status      String    @default("pending") @db.VarChar(50)
+  date_given  DateTime? @db.Timestamp(6)
+  created_at  DateTime  @default(now()) @db.Timestamp(6)
+  updated_at  DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([rating])
+  @@index([created_at])
+  @@index([status])
+  @@map("testimonials")
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(191) // Reduced from 255 to avoid MySQL key length limit (1000 bytes)
+  url       String   @db.VarChar(500) // Cloudinary URL (https://res.cloudinary.com/...) or local path
+  public_id String?  @db.VarChar(255) // Cloudinary public_id for deletion or filename for local storage
+  mimetype  String   @db.VarChar(100)
+  size      Int      // File size in bytes
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([name])
+  @@index([createdAt])
+  @@map("media")
+}
+
+model Portfolio {
+  id                Int       @id @default(autoincrement())
+  title             String    @db.VarChar(255)
+  description       String    @db.Text
+  images            String    @db.Text
+  category          String    @db.VarChar(100)
+  technologies_used String    @db.Text
+  link              String?   @db.VarChar(500)
+  status            String    @default("draft") @db.VarChar(50)
+  client_name       String?   @db.VarChar(255)
+  completion_date   DateTime? @db.Timestamp(6)
+  created_at        DateTime  @default(now()) @db.Timestamp(6)
+  updated_at        DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([category])
+  @@index([status])
+  @@index([created_at])
+  @@map("portfolios")
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  email      String   @db.VarChar(191) // FIXED: Was 255 (This caused TableId 22 failure)
+  subject    String   @db.VarChar(255)
+  message    String   @db.Text
+  status     String   @default("unread") @db.VarChar(50)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("contacts")
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String   @db.Text
+  icon        String?  @db.VarChar(100)
+  features    String   @db.Text
+  price       Float?   @db.Float
+  category    String   @db.VarChar(100)
+  created_at  DateTime @default(now()) @db.Timestamp(6)
+  updated_at  DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([category])
+  @@index([created_at])
+  @@map("services")
+}
+
+model Subscriber {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique @db.VarChar(191) 
+  status     String   @default("active") @db.VarChar(50)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("subscribers")
+}
+
+model FAQ {
+  id         Int      @id @default(autoincrement())
+  question   String   @db.Text
+  answer     String   @db.Text
+  category   String   @db.VarChar(100)
+  tags       String   @db.Text
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([category])
+  @@index([created_at])
+  @@map("faqs")
+}
+
+model Event {
+  id           Int           @id @default(autoincrement())
+  title        String        @db.VarChar(255)
+  description  String        @db.Text
+  date         DateTime      @default(now()) @db.Timestamp(6)
+  location     String        @db.VarChar(255)
+  organizer_id Int?
+  capacity     Int?
+  tags         String        @db.Text
+  created_at   DateTime      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime      @default(now()) @updatedAt @db.Timestamp(6)
+  attendees    EventAttendee[]
+  organizer    User?         @relation("EventOrganizer", fields: [organizer_id], references: [id])
+
+  @@index([date])
+  @@index([organizer_id])
+  @@index([created_at])
+  @@map("events")
+}
+
+model EventAttendee {
+  id       Int   @id @default(autoincrement())
+  event_id Int
+  user_id  Int
+  event    Event @relation(fields: [event_id], references: [id])
+  user     User  @relation(fields: [user_id], references: [id])
+
+  @@index([event_id])
+  @@index([user_id])
+  @@map("event_attendees")
+}
+
+model Table {
+  id          Int           @id @default(autoincrement())
+  tableNumber String        @unique @db.VarChar(50)
+  capacity    Int
+  qrCode      String?       @unique @db.VarChar(191) 
+  isActive    Boolean       @default(true)
+  location    String?       @db.VarChar(255)
+  createdAt   DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime      @default(now()) @updatedAt @db.Timestamp(6)
+  orders      Order[]
+  reservations Reservation[]
+
+  @@index([tableNumber])
+  @@index([isActive])
+  @@map("tables")
+}
+
+model Reservation {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  tableId         Int?
+  guestName       String            @db.VarChar(255)
+  guestEmail      String            @db.VarChar(191) // FIXED: Was 255 (Would cause failure later)
+  guestPhone      String            @db.VarChar(20)
+  partySize       Int
+  reservationDate DateTime          @db.Date
+  reservationTime String            @db.VarChar(5)
+  status          ReservationStatus @default(PENDING)
+  specialRequests String?           @db.Text
+  createdAt       DateTime          @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime          @default(now()) @updatedAt @db.Timestamp(6)
+  table           Table?            @relation(fields: [tableId], references: [id])
+  user            User              @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([tableId])
+  @@index([status])
+  @@index([reservationDate])
+  @@index([reservationDate, status])
+  @@index([guestEmail])
+  @@index([guestPhone])
+  @@map("reservations")
+}
+
+model DeliveryZone {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(191) 
+  postcodes     String   @db.Text
+  deliveryFee   Float    @db.Float
+  minOrderValue Float?   @db.Float
+  estimatedTime Int
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  @@index([isActive])
+  @@index([name])
+  @@map("delivery_zones")
+}
+
+model ProductPriceHistory {
+  id          Int      @id @default(autoincrement())
+  menuId      Int      @map("productId") 
+  oldPrice    Float    @db.Float
+  newPrice    Float    @db.Float
+  changedBy   Int
+  reason      String?  @db.Text
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  changedByUser User   @relation(fields: [changedBy], references: [id])
+  product     Product  @relation(fields: [menuId], references: [id])
+
+  @@index([menuId])
+  @@index([changedBy])
+  @@index([createdAt])
+  @@map("menu_price_history")
+}
+
+enum UserRole {
+  ADMIN
+  SELLER
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  PREPARING
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+enum OrderType {
+  DINE_IN
+  PICKUP
+  DELIVERY
+  ONLINE
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  SEATED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum PaymentMethod {
+  STRIPE
+  PAYPAL
+  CASH
+  CARD
+  PAY_IN_RESTAURANT
+  PAY_ON_ARRIVAL
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+enum PromotionType {
+  PERCENTAGE
+  FIXED
+  BOGO
+  PRODUCT_BASED
+  CATEGORY_BASED
+  MIN_ORDER_BASED
+  FIRST_ORDER
+  COUPON_CODE
+  HAPPY_HOURS
+}
+
+enum ApplicableType {
+  ALL_PRODUCTS
+  SPECIFIC_PRODUCTS
+  SPECIFIC_CATEGORIES
+}
+
+enum BookingType {
+  PICKUP
+  DELIVERY
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentType {
+  CASH
+  CARD_ON_DELIVERY
+  ONLINE
+}
+
+enum TimeslotStatus {
+  AVAILABLE
+  FULL
+  DISABLED
+}
+
+enum NotificationType {
+  EMAIL
+  WHATSAPP
+}
+
+enum NotificationStatus {
+  SENT
+  FAILED
+  PENDING
+}

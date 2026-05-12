@@ -1,0 +1,1353 @@
+{
+    "categories": [
+      {
+        "name": "Quick Bites",
+        "type": "Vegetarian",
+        "description": "Irresistibly crisp, boldly spiced, and bursting with flavor—these small bites bring the energy of India's vibrant street food culture and home kitchens straight to your table.",
+        "items": [
+          {
+            "name": "Onion Rings",
+            "description": "Sweet onion slices dipped in a seasoned batter, then fried till perfectly crisp. A familiar favorite, elevated with a subtle Indian twist.",
+            "price": "€4.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-veg/Onion-Rings.jpg",
+            "availability": 10,
+            "allergenCodes": [1, 3, 7, 10]
+          },
+          {
+            "name": "Chilly Chips",
+            "description": "Golden-fried potato wedges tossed in a smoky, red chili masala—spicy, bold, and packed with flavor in every bite.",
+            "price": "€4.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-veg/Chilly-Chips.jpg",
+            "allergenCodes": [1, 10]
+          },
+          {
+            "name": "Spicy Cheese Bites",
+            "description": "Golden bites filled with molten cheese and a spark of green chili—crunchy on the outside, luxuriously soft inside.",
+            "price": "€5.20",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-veg/Spicy-Cheese-Bites.jpg",
+            "allergenCodes": [1, 3, 7]
+          },
+          {
+            "name": "Cheese Rolls",
+            "description": "Crispy spring rolls filled with a creamy, spiced cheese mixture—golden on the outside, meltingly soft inside. A vegetarian favorite with a decadent twist.",
+            "price": "€5.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-veg/Cheese-Rolls.jpg",
+            "allergenCodes": [1, 6, 7]
+          }
+        ]
+      },
+      {
+        "name": "Quick Bites",
+        "type": "Non-Vegetarian",
+        "description": "Irresistibly crisp, boldly spiced, and bursting with flavor—these small bites bring the energy of India's vibrant street food culture and home kitchens straight to your table.",
+        "items": [
+          {
+            "name": "Chicken Lollipop",
+            "description": "Juicy chicken drumettes marinated in bold, rustic spices, fried to a crisp golden finish. Fiery on the outside, tender at the heart—this is street food at its most regal.",
+            "price": "€7.25",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-non-veg/Chicken-Lollipop.jpg",
+            "allergenCodes": [1, 3, 6]
+          },
+          {
+            "name": "Tandoori Chicken Wings",
+            "description": "Marinated overnight in yogurt and robust Indian spices, then slow-roasted in the tandoor until smoky and succulent—pure magic from the clay oven.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-non-veg/Tandoori-Chicken-Wings.jpg",
+            "allergenCodes": [7, 10]
+          },
+          {
+            "name": "Popcorn Chicken Masala",
+            "description": "Tiny nuggets of chicken bursting with masala flavor, fried to a crispy finish—perfectly spiced and impossible to stop at one.",
+            "price": "€6.50",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-non-veg/Popcorn-Chicken-Masala.jpg",
+            "allergenCodes": [1, 3, 6]
+          },
+          {
+            "name": "Squid Rings",
+            "description": "Delicate squid rings with a light, crunchy coating, sprinkled with zesty chaat masala. A coastal classic brought to life with bold, tangy spice.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-non-veg/Squid-Rings.jpg",
+            "allergenCodes": [1, 10, 14]
+          },
+          {
+            "name": "Prawn Butterfly",
+            "description": "Plump prawns gently coated and shallow-fried till golden, served with a fresh, zingy chutney. A coastal delight with royal flair.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/quick-bites-non-veg/Prawn-Butterfly.jpg",
+            "allergenCodes": [1, 2, 10]
+          }
+        ]
+      },
+      {
+        "name": "Soups",
+        "type": "All",
+        "description": "Begin your journey with a warm embrace—each spoonful a soul-soothing elixir steeped in Indian tradition.",
+        "items": [
+          {
+            "name": "Spiced Chicken Soup",
+            "description": "A fragrant golden broth slow-simmered with ginger, garlic, and turmeric—warming, nourishing, and deeply comforting, like a bowl of home.",
+            "price": "€4.80",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/soups/Spiced-Chicken-Soup.png",
+            "allergenCodes": [9]
+          },
+          {
+            "name": "Lentil Soup (Dal Soup)",
+            "description": "Earthy yellow lentils gently tempered with cumin and ghee—light yet fulfilling, a humble classic with timeless appeal.",
+            "price": "€4.20",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/soups/Lentil-Soup-(Dal-Soup).png",
+            "allergenCodes": [7, 9]
+          },
+          {
+            "name": "Masala Tomato Soup",
+            "description": "Ripe tomatoes slowly simmered with cumin, clove, and black pepper—rich, tangy, and infused with the comforting spice of Indian kitchens.",
+            "price": "€4.60",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/soups/Masala-Tomato-Soup.png",
+            "allergenCodes": [7, 9]
+          },
+          {
+            "name": "Chicken Shorba",
+            "description": "A clear, aromatic chicken broth delicately spiced with crushed pepper and herbs—elegant, refreshing, and deeply restorative.",
+            "price": "€4.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/soups/Chicken-Shorba.png",
+            "allergenCodes": [9]
+          }
+        ]
+      },
+      {
+        "name": "Raita & Salads",
+        "type": "All",
+        "description": "Cool, refreshing, and vibrant—our raitas and salads are the perfect companions to balance bold spices and elevate every bite. Crafted with fresh ingredients and traditional flavors.",
+        "items": [
+          {
+            "name": "Cucumber Raita",
+            "description": "Creamy yogurt blended with crisp cucumber, a dash of cumin, and fresh coriander—cool, soothing, and refreshing.",
+            "price": "€3.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/raita-salads/RAITA/Cucumber-Raita.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Mix Raita",
+            "description": "A vibrant medley of cucumber, onion, tomato, and herbs mixed into smooth yogurt—balanced, tangy, and packed with crunch.",
+            "price": "€3.80",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Boondi Raita",
+            "description": "Delicate, crispy boondi pearls soaked in spiced yogurt—light, flavorful, and a traditional favorite.",
+            "price": "€3.80",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/raita-salads/RAITA/Boondi-Raita.png",
+            "allergenCodes": [1, 7]
+          },
+          {
+            "name": "Green Salad",
+            "description": "A crisp selection of seasonal greens, cucumber, tomato, and onion with a splash of lemon—clean, fresh, and revitalizing.",
+            "price": "€3.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/raita-salads/SALADS/Green-Salad.png",
+            "allergenCodes": []
+          },
+          {
+            "name": "The Saffron Lounge Special Salad",
+            "description": "An elevated mix of exotic greens, crunchy vegetables, toasted seeds, and a hint of spice—vibrant, refreshing, and chef-curated for flavor and flair.",
+            "price": "€5.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/raita-salads/SALADS/The-Saffron-Lounge-Special.png",
+            "allergenCodes": [8]
+          }
+        ]
+      },
+      {
+        "name": "Starters",
+        "type": "All",
+        "description": "Let the feast begin—an array of vibrant, spice-laden dishes to awaken every sense and stir the soul.",
+        "items": [
+          {
+            "name": "Papadum basket 2 pcs",
+            "description": "Delicate, crunchy lentil crisps served with our house chutneys—a light, crackling start to your royal feast.",
+            "price": "€2.00",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Papadum-Basket.png",
+            "allergenCodes": [1]
+          },
+          {
+            "name": "Vegetable Pakora",
+            "description": "Crisp vegetable fritters, lightly spiced and golden-fried—comforting, crunchy, and utterly satisfying.",
+            "price": "€3.90",
+            "dietaryNotes": ["Vegetarian", "Gluten-Free"],
+            "image": "/assets-main/menu/starters/Vegetable-Pakora.png",
+            "allergenCodes": [3]
+          },
+          {
+            "name": "Vegetable Samosa",
+            "description": "Golden pastry triangles filled with spiced potatoes and peas—timeless, satisfying, and every bite steeped in tradition.",
+            "price": "€3.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Vegetable-Samosa.png",
+            "allergenCodes": [1]
+          },
+          {
+            "name": "Onion Bhaji",
+            "description": "Crisp, tangled fritters of onion, cumin, and gram flour—light yet addictive, with every crunch revealing layers of flavor.",
+            "price": "€3.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Onion-Bhaji.png",
+            "allergenCodes": [1]
+          },
+          {
+            "name": "Paneer Pakora",
+            "description": "Cubes of fresh cottage cheese cloaked in a spiced chickpea batter and fried—cheesy, crisp, and delightfully indulgent.",
+            "price": "€4.50",
+            "dietaryNotes": ["Vegetarian", "Gluten-Free"],
+            "image": "/assets-main/menu/starters/Paneer-Pakora.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chana Chaat",
+            "description": "Chickpeas tossed with onions, chutneys, and coriander—a refreshing street food delight with tang, crunch, and spice.",
+            "price": "€4.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Dahi Puri Chaat",
+            "description": "Crisp puris filled with cool yogurt, potatoes, and sweet-sour chutneys—a burst of textures and flavors in every bite.",
+            "price": "€5.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Dahi-Puri-Chaat.png",
+            "allergenCodes": [1, 7]
+          },
+          {
+            "name": "Aloo Tikki Chaat",
+            "description": "Spiced potato patties topped with tangy tamarind, mint chutney, and yogurt—a rich, nostalgic street-side indulgence.",
+            "price": "€5.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Aloo-Tikki-Chaat.png",
+            "allergenCodes": [1, 7, 10]
+          },
+          {
+            "name": "Chilli Paneer",
+            "description": "Soft paneer cubes seared with peppers and green chilies—smoky, vibrant, and irresistibly spiced.",
+            "price": "€5.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Chilli-Paneer.png",
+            "allergenCodes": [6, 7]
+          },
+          {
+            "name": "Ragda Petis",
+            "description": "A beloved Mumbai street classic—crispy potato patties over spiced white peas curry, drizzled with chutneys and fresh coriander.",
+            "price": "€7.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Ragda-Petis.png",
+            "allergenCodes": [1, 10]
+          },
+          {
+            "name": "Chicken Pakora",
+            "description": "Tender pieces of chicken coated in a spiced gram flour batter, fried until golden and crisp—a street-side staple elevated with finesse.",
+            "price": "€4.90",
+            "dietaryNotes": ["Non-Vegetarian", "Gluten-Free"],
+            "image": "/assets-main/menu/starters/Chicken-Pakora.png",
+            "allergenCodes": [3]
+          },
+          {
+            "name": "Fish Pakora",
+            "description": "Fresh fish fillets enveloped in a seasoned batter, fried to a delicate crunch and finished with a sprinkle of chaat masala—coastal comfort at its finest.",
+            "price": "€5.50",
+            "dietaryNotes": ["Non-Vegetarian", "Gluten-Free"],
+            "image": "/assets-main/menu/starters/Fish-Pakora.png",
+            "allergenCodes": [4]
+          },
+          {
+            "name": "Meat Samosa",
+            "description": "Flaky pastries encasing spiced minced lamb—rich, hearty, and deeply aromatic.",
+            "price": "€4.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Meat-Samosa.png",
+            "allergenCodes": [1]
+          },
+          {
+            "name": "Chilli Chicken",
+            "description": "Stir-fried chicken tossed with green chilies, onions, and bold Indian spices—a vibrant, fiery medley that lingers on the palate.",
+            "price": "€6.00",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Chilli-Chicken.png",
+            "allergenCodes": [6]
+          },
+          {
+            "name": "Chicken 65",
+            "description": "Fiery morsels of chicken tossed with curry leaves, red chili, and secret house masalas—crackling with heat and bursting with flavor.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Chicken-65.png",
+            "allergenCodes": [1, 6]
+          },
+          {
+            "name": "Seekh Kebab Starter",
+            "description": "Skewered rolls of minced lamb, infused with fresh herbs and earthy spices, grilled to perfection—a kebab with bold character and centuries of tradition.",
+            "price": "€6.00",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Seekh-Kebab-Starter.png",
+            "allergenCodes": [1]
+          },
+          {
+            "name": "Chicken Puri",
+            "description": "Tender chicken masala served over a golden, puffed puri—flavorful, tangy, and full of flair.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Chicken-Puri.png",
+            "allergenCodes": [1]
+          },
+          {
+            "name": "Chicken Chaat",
+            "description": "Diced chicken marinated with chaat masala, lemon, and onions—zesty, spicy, and full of bite.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Chicken-Chaat.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Prawn Puri",
+            "description": "Delicately cooked prawns in a spiced gravy, resting on airy, golden puris—an elegant bite brimming with coastal charm.",
+            "price": "€6.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Prawn-Puri.png",
+            "allergenCodes": [1, 2]
+          },
+          {
+            "name": "Vegetable Manchurian",
+            "description": "Golden-fried vegetable dumplings tossed in Indo-Chinese garlic sauce—crispy outside, juicy inside, and full of umami.",
+            "price": "€6.90",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Vegetable-Manchurian.png",
+            "allergenCodes": [1, 6]
+          },
+          {
+            "name": "Mixed Vegetable Platter",
+            "description": "A royal vegetarian medley—samosas, pakoras, bhajis, and more. Perfect for sharing and sampling a bit of everything.",
+            "price": "€8.95",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/starters/Mixed-Vegetable-Platter.png",
+            "allergenCodes": [1, 3, 7]
+          },
+          {
+            "name": "Non-Veg Mixed Platter",
+            "description": "A rich assortment of our top meat starters—chicken 65, pakoras, fish bites, and more. Ideal for indulgent beginnings.",
+            "price": "€10.95",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/starters/Non-Veg-Mixed-Platter.png",
+            "allergenCodes": [1, 3, 4, 6]
+          }
+        ]
+      },
+      {
+        "name": "Main Curries",
+        "type": "All",
+        "description": "Create your royal feast—select your preferred protein, then pair it with one of our masterfully crafted sauces. Each curry is a tribute to the age-old kitchens of India, where tradition, fire, and fragrance come together in perfect harmony.",
+        "items": [
+          {
+            "name": "Chicken Korma",
+            "description": "Tender free-range chicken in a royal delight of ground cashews, cream, and coconut—velvety, golden, and gently spiced.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 8]
+          },
+          {
+            "name": "Chicken Mango Curry",
+            "description": "Free-range chicken with sweet mango purée and subtle spices—fruity, fragrant, and comforting.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chicken Badam Pasanda",
+            "description": "Free-range chicken in ground almonds and rich cream sauce touched with cardamom—fit for a king.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png"
+              },
+          {
+            "name": "Chicken Malai",
+            "description": "Free-range chicken in silken, buttery sauce with delicate mild spices—subtle indulgence.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chicken Curry",
+            "description": "Free-range chicken in the timeless classic—onions, tomatoes, and warm spices slow-simmered.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chicken Saag (Palak)",
+            "description": "Free-range chicken in lush, earthy spinach curry—nutritious, comforting, and vibrant.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chicken Dopiaza",
+            "description": "Free-range chicken with double onions and sweet-tangy masala—balanced rustic flavors.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chicken Madras",
+            "description": "Free-range chicken in red chili heat with aromatic curry leaves—fiery and intense.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Chicken Vindaloo",
+            "description": "Free-range chicken in vibrant vinegar and red chilies—spicy, tangy, and thrilling.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 9, 10]
+          },
+          {
+            "name": "Chicken PHAL (Signature)",
+            "description": "Free-range chicken in our signature blend—layered, rich, and fiery celebration of bold Indian flavor.",
+            "price": "€9.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Lamb Korma",
+            "description": "Juicy lamb in royal cashew, cream, and coconut sauce—velvety, golden, and gently spiced.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 8]
+          },
+          {
+            "name": "Lamb Rogan Josh",
+            "description": "Lamb in Kashmiri classic—fiery red and aromatic with slow-cooked richness and warmth.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Lamb Vindaloo",
+            "description": "Lamb in vibrant vinegar and red chilies—spicy, tangy, and thrillingly addictive.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 9, 10]
+          },
+          {
+            "name": "Lamb PHAL (Signature)",
+            "description": "Lamb in our signature blend—layered, rich, and fiery celebration of bold Indian flavor.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Fish Korma",
+            "description": "Ocean-fresh fish in royal cashew, cream, and coconut sauce—velvety and gently spiced.",
+            "price": "€12.50",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [4, 7, 8]
+          },
+          {
+            "name": "Fish Malabar",
+            "description": "Fresh fish in coconut-based curry with traditional Malabar spices—tangy and aromatic.",
+            "price": "€12.50",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [4, 7]
+          },
+          {
+            "name": "Fish Vindaloo",
+            "description": "Ocean-fresh fish in vibrant vinegar and red chilies—spicy, tangy, and thrilling.",
+            "price": "€12.50",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [4, 7, 9, 10]
+          },
+          {
+            "name": "Prawn Malabar",
+            "description": "King prawns in coconut-based curry with traditional Malabar spices—tangy and aromatic.",
+            "price": "€11.50",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Prawn Vindaloo",
+            "description": "King prawns in vibrant vinegar and red chilies—spicy, tangy, and thrilling.",
+            "price": "€11.50",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [2, 7, 9, 10]
+          },
+          {
+            "name": "Vegetable Korma",
+            "description": "Seasonal vegetables in royal cashew, cream, and coconut sauce—velvety and gently spiced.",
+            "price": "€8.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 8]
+          },
+          {
+            "name": "Vegetable Saag (Palak)",
+            "description": "Seasonal vegetables in lush, earthy spinach curry—nutritious, comforting, and vibrant.",
+            "price": "€8.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Vegetable Jalfrezi",
+            "description": "Seasonal vegetables with peppers, onions, and green chilies—bold kick and fresh crunch.",
+            "price": "€8.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Paneer Butter Masala",
+            "description": "Fresh paneer in rich, creamy tomato-based curry—comforting and indulgent.",
+            "price": "€9.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Paneer Tikka Masala",
+            "description": "Grilled paneer in spicy, creamy tomato curry—smoky, rich, and full of character.",
+            "price": "€9.50",
+            "dietaryNotes": ["Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          }
+        ]
+      },
+  
+  
+   {
+    "name": "Tandoori Sizzlers",
+    "type": "All",
+    "description": "A showstopper! Bringing drama to your table, our sizzling platters arrive in a cloud of spice and steam—crackling, aromatic, and full of flair. Each dish is a grand performance of bold flavors and royal indulgence, served piping hot and impossible to ignore.",
+    "items": [
+      {
+        "name": "Tandoori Chicken (Half)",
+        "description": "Juicy chicken on the bone, marinated overnight in yogurt, lime, and house-ground spices, then flame-roasted until charred outside and tender within. A classic, majestic feast.",
+        "price": "€10.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Tandoori Chicken.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Tandoori Chicken (Full)",
+        "description": "Juicy chicken on the bone, marinated overnight in yogurt, lime, and house-ground spices, then flame-roasted until charred outside and tender within. A classic, majestic feast.",
+        "price": "€17.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Tandoori Chicken.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Chicken Tikka",
+        "description": "Boneless chicken chunks steeped in a vibrant marinade of yogurt, ginger, and masalas, roasted to golden perfection—succulent, smoky, and soul-satisfying.",
+        "price": "€10.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Chicken Tikka.png",
+        "allergenCodes": [7, 10]
+      },
+      {
+        "name": "Achari Chicken Tikka",
+        "description": "Boneless chicken marinated in a bold, tangy blend of traditional pickling spices, then seared in the tandoor for a smoky, spicy punch.",
+        "price": "€11.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Achari Chicken Tikka.png",
+        "allergenCodes": [7, 10]
+      },
+      {
+        "name": "Lamb Tikka",
+        "description": "Prime lamb pieces marinated with royal spices and slow-roasted in the tandoor—rich, robust, and melt-in-your-mouth delicious.",
+        "price": "€11.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Lamb Tikka.png",
+        "allergenCodes": [7, 10]
+      },
+      {
+        "name": "Seekh Kebab",
+        "description": "Skewered rolls of minced lamb, infused with fresh herbs and earthy spices, grilled to perfection—a kebab with bold character and centuries of tradition.",
+        "price": "€11.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Seekh Kebab.png",
+        "allergenCodes": [1, 10]
+      },
+      {
+        "name": "Tandoori King Prawns",
+        "description": "Majestic king prawns bathed in a luxurious marinade of garlic, spices, and lime, then kissed by fire in the tandoor—juicy, smoky, and regal in every bite.",
+        "price": "€14.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Tandoori King Prawns.png",
+        "allergenCodes": [2, 7, 10]
+      },
+      {
+        "name": "Tandoori Fish Tikka",
+        "description": "Ocean-fresh fish fillets marinated in zesty spices, grilled to a smoky char—light, flaky, and bursting with bold coastal flavor.",
+        "price": "€12.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Tandoori Fish Tikka.png",
+        "allergenCodes": [4, 7, 10]
+      },
+      {
+        "name": "Tandoori Soya Chaap",
+        "description": "Plant-based protein marinated in robust spices and grilled in the tandoor—rich in flavor, satisfying in texture, and a favorite among vegetarians.",
+        "price": "€9.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Tandoori Soya Chaap.png",
+        "allergenCodes": [1, 6, 10]
+      },
+      {
+        "name": "Paneer Tikka",
+        "description": "Fresh cottage cheese cubes marinated in tangy spices, grilled with peppers and onions—soft, smoky, and bursting with flavor.",
+        "price": "€10.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Paneer Tikka.png",
+        "allergenCodes": [7, 10]
+      },
+      {
+        "name": "Tandoori Mixed Grill (Serves 2)",
+        "description": "A royal platter of tandoori treasures—chicken tikka, lamb tikka, seekh kebab, tandoori chicken, and prawns—all served sizzling and aromatic. A true feast for the senses.",
+        "price": "€17.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/TANDOORI SIZZLERS/Tandoori Mixed Grill.png",
+        "allergenCodes": [2, 4, 7]
+      }
+    ]
+  }
+  ,
+  
+  
+  
+      {
+        "name": "Non-Vegetarian Specialties",
+        "type": "All",
+        "description": "A curated collection of regional classics and royal recipes, each dish rich in heritage and flavor. From coastal comfort to northern indulgence, these specialties celebrate the depth and diversity of India's culinary traditions.",
+        "items": [
+          {
+            "name": "Chicken Tikka Masala",
+            "description": "A timeless favorite—chargrilled chicken tikka simmered in a vibrant, spiced tomato-cream sauce. Bold, smoky, and full of North Indian character.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 10]
+          },
+          {
+            "name": "Butter Chicken",
+            "description": "A beloved classic of tender chicken simmered in a silky tomato-butter sauce, finished with cream and a hint of fenugreek—smooth, rich, and endlessly comforting.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [1, 7]
+          },
+          {
+            "name": "Chicken Chashni",
+            "description": "A sweet and tangy Punjabi-style curry with a touch of flair—tandoori chicken tikka tossed in a luscious, honeyed tomato glaze with gentle spices.",
+            "price": "€10.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 10]
+          },
+          {
+            "name": "Goan Fish Curry",
+            "description": "A coastal gem from Goa—fresh fish fillets simmered in a tangy coconut-based curry with tamarind, mustard seeds, and curry leaves.",
+            "price": "€12.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [4, 7, 10]
+          },
+          {
+            "name": "Afghani Chicken Curry",
+            "description": "Creamy, nutty, and mildly spiced—this Mughal-inspired dish features chicken slow-cooked in a luxurious blend of yogurt, cashews, and aromatic spices.",
+            "price": "€12.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7, 8, 10]
+          },
+          {
+            "name": "Afghani Lamb Curry",
+            "description": "Tender lamb simmered in a rich, velvety gravy of cream, saffron, and ground nuts—delicately spiced and full of regal depth.",
+            "price": "€13.90",
+            "dietaryNotes": ["Non-Vegetarian"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          }
+        ]
+      },
+  
+      
+     {
+    "name": "Vegetarian Specialties",
+    "type": "All",
+    "description": "Each dish is a celebration of nature's bounty, cooked with devotion and layered with centuries-old Indian spices. Nourishing, flavorful, and deeply comforting—these vegetarian delights can easily be the star of your table.",
+    "items": [
+      {
+        "name": "Paneer Tikka Masala",
+        "description": "Cubes of fresh, soft paneer simmered in a luscious tomato-based gravy—smoky, creamy, and spiced just right.",
+        "price": "€9.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Paneer Tikka Masala.png",
+        "allergenCodes": [7, 10]
+      },
+      {
+        "name": "Saag Paneer",
+        "description": "A velvety blend of spinach and Indian cottage cheese, enriched with subtle spices—a nourishing harmony of greens and cream.",
+        "price": "€8.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Saag Paneer.png",
+        "allergenCodes": [7, 10]
+      },
+      {
+        "name": "Karahi Paneer",
+        "description": "Paneer tossed with bell peppers, onions, and tomatoes in a bold masala—wok-tossed for smoky flavor and rustic charm.",
+        "price": "€9.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Karahi Paneer.png",
+        "allergenCodes": [7, 8, 10]
+      },
+      {
+        "name": "Mutter Paneer",
+        "description": "Garden peas and soft paneer cubes cooked in a spiced onion-tomato gravy—homestyle comfort with a touch of nostalgia.",
+        "price": "€8.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Mutter Paneer.png",
+        "allergenCodes": [1, 6, 10]
+      },
+      {
+        "name": "Paneer Butter Masala",
+        "description": "A buttery, rich tomato curry bursting with flavor and fragrance—where soft paneer meets indulgent luxury.",
+        "price": "€9.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Paneer Butter Masala.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Chana Masala",
+        "description": "Chickpeas slow-cooked with ginger, garlic, and garam masala—a hearty and soulful dish packed with warmth.",
+        "price": "€7.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Chana Masala.png",
+        "allergenCodes": [10]
+      },
+      {
+        "name": "Tarka Daal",
+        "description": "Yellow lentils tempered with sizzling garlic, cumin, and red chilies—simple, nourishing, and utterly satisfying.",
+        "price": "€7.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Tarka Daal.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Bombay Aaloo",
+        "description": "Golden potatoes tossed with mustard seeds, curry leaves, and tangy spices—simple, bold, and bursting with street-style flair.",
+        "price": "€7.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Bombay Aaloo.png",
+        "allergenCodes": [10]
+      },
+      {
+        "name": "Saag Aaloo",
+        "description": "Potatoes simmered in spiced spinach curry—earthy, warming, and full of flavor.",
+        "price": "€7.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Saag Aaloo.png",
+        "allergenCodes": [10]
+      },
+      {
+        "name": "Malai Kofta",
+        "description": "Soft vegetable dumplings in a rich, creamy cashew and tomato sauce—indulgent, aromatic, and festive.",
+        "price": "€8.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Malai Kofta.png",
+        "allergenCodes": [1, 7, 8]
+      },
+      {
+        "name": "Veg Kofta",
+        "description": "Delicate vegetable balls in a spiced curry sauce—hearty, flavorful, and full of rustic charm.",
+        "price": "€8.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Veg Kofta.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Bhindi Masala",
+        "description": "Okra sautéed with onions, tomatoes, and traditional spices—dry, hearty, and packed with rustic northern flavor.",
+        "price": "€9.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Bhindi Masala.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Veg Meat Kadhai",
+        "description": "Plant-based protein chunks stir-fried with peppers and onions in a fiery tomato masala—bold, satisfying, and layered with smoky depth.",
+        "price": "€9.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/VEGETARIAN SPECIALTIES/Veg Meat Kadhai.png",
+        "allergenCodes": [1, 6, 10]
+      }
+    ]
+  }
+  ,
+  
+  
+   {
+    "name": "Biryani & Rice",
+    "type": "All",
+    "description": "Long-grain basmati rice infused with saffron, whole spices, and centuries of culinary heritage—each grain steeped in aroma and flavor. Whether layered with vegetables or tender meat, our biryanis and rice dishes are a fragrant journey through India's royal kitchens.",
+    "items": [
+      {
+        "name": "Vegetable Biryani",
+        "description": "A vibrant medley of garden vegetables layered with fragrant basmati rice, saffron, and warming spices—slow-cooked to capture the soul of a traditional dum biryani.",
+        "price": "€10.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Vegetable Biryani.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Chicken Biryani",
+        "description": "Marinated chicken nestled between layers of golden rice and saffron, sealed and slow-cooked to perfection—every bite a royal indulgence.",
+        "price": "€12.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Chicken Biryani.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Lamb Biryani",
+        "description": "Succulent pieces of lamb marinated in traditional spices and slow-cooked between layers of aromatic basmati rice—deeply flavorful and tender to the core.",
+        "price": "€12.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Lamb Biryani.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Prawn Biryani",
+        "description": "Plump prawns gently spiced and nestled in saffron-kissed rice—an oceanic take on the royal biryani, delicate yet bold.",
+        "price": "€13.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Prawn Biryani.png",
+        "allergenCodes": [2, 7]
+      },
+      {
+        "name": "The Saffron Lounge Special Biryani",
+        "description": "An opulent biryani experience—layered with aromatic rice, saffron, tender meats, and house-special masalas. Sealed and slow-cooked for a symphony of flavors fit for a feast.",
+        "price": "€14.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/The Saffron Lounge Special Biryani.png",
+        "allergenCodes": [2, 4, 7]
+      },
+      {
+        "name": "Plain Basmati Rice",
+        "description": "Fluffy, aromatic long-grain rice—steamed to gentle perfection and ready to soak up rich curries.",
+        "price": "€2.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Plain Basmati Rice.png",
+        "allergenCodes": []
+      },
+      {
+        "name": "Jeera Rice",
+        "description": "Fragrant basmati tempered with roasted cumin seeds—simple, earthy, and utterly comforting.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Jeera Rice.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Coconut Rice",
+        "description": "Steamed rice infused with the sweet aroma of coconut and tempered spices—light, fragrant, and coastal in spirit.",
+        "price": "€3.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Coconut Rice.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Pilau Rice",
+        "description": "Basmati rice cooked with whole spices—golden, aromatic, and subtly spiced.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Pilau Rice.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Saffron Special Rice",
+        "description": "A golden celebration—basmati rice delicately kissed with royal saffron strands and a hint of cardamom.",
+        "price": "€4.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Saffron Special Rice.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Vegetable Rice",
+        "description": "Lightly tossed with seasonal vegetables and gentle masalas—flavorful, colorful, and hearty.",
+        "price": "€4.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Vegetable Rice.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Lemon Rice",
+        "description": "A zesty South Indian classic—tangy, turmeric-hued rice with mustard seeds and curry leaves.",
+        "price": "€3.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Lemon Rice.png",
+        "allergenCodes": [10]
+      },
+      {
+        "name": "Kashmiri Pulao",
+        "description": "A sweet and aromatic rice dish studded with dried fruits, nuts, and a whisper of saffron—fragrant, festive, and rich with Kashmiri flair.",
+        "price": "€4.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BIRYANI_RICE/Kashmiri Pulao.png",
+        "allergenCodes": [7, 8]
+      }
+    ]
+  }
+  ,
+  
+  
+     {
+    "name": "Breads",
+    "type": "All",
+    "description": "From the heart of our tandoor to your table, these breads are soft, smoky, and full of soul. Handcrafted daily and baked to golden perfection, they are made to scoop, savor, and soak up every drop of curry royalty.",
+    "items": [
+      {
+        "name": "Plain Naan",
+        "description": "Soft, pillowy flatbread—lightly charred and served warm to cradle every rich curry.",
+        "price": "€2.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Plain Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Garlic Naan",
+        "description": "Infused with fresh garlic and brushed with butter, this naan adds a bold, aromatic flair to every bite.",
+        "price": "€3.00",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Garlic Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Cheese Naan",
+        "description": "Oozing with molten cheese and baked until golden—indulgent, creamy, and utterly satisfying.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Cheese Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Tandoori Roti",
+        "description": "Whole wheat flatbread with a smoky char and hearty bite—a rustic favorite from the tandoor.",
+        "price": "€2.20",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Tandoori Roti.png",
+        "allergenCodes": [1]
+      },
+      {
+        "name": "Keema Naan",
+        "description": "Soft naan generously stuffed with spiced minced meat—bold, juicy, and bursting with royal flavor.",
+        "price": "€3.90",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Keema Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Tandoori Laccha Paratha",
+        "description": "Multi-layered and flaky with a golden crisp—this spiral of delight is perfect for mopping up rich gravies.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Tandoori Laccha Paratha.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Butter Naan",
+        "description": "Fluffy naan brushed with creamy butter—simple, luxurious, and comforting.",
+        "price": "€3.00",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Butter Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Roti / Phulka",
+        "description": "Soft, griddled whole wheat rounds—light, wholesome, and everyday soulful.",
+        "price": "€2.00",
+        "dietaryNotes": ["Vegetarian"],
+       "image": "/assets-main/menu/BREADS/rotiphula.png",
+        "allergenCodes": [1]
+      },
+      {
+        "name": "Methi Paratha",
+        "description": "Earthy fenugreek-laced paratha—layered with flavor and lightly toasted to golden crispness.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Methi Paratha.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Cheese & Garlic Naan",
+        "description": "A decadent duet of rich cheese and fragrant garlic—melted and toasted into soft, golden perfection.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Cheese & Garlic Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Pudina Paratha",
+        "description": "Mint-kissed layers folded and crisped—cool, herbaceous, and vibrant.",
+        "price": "€3.80",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Pudina Paratha.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Tandoori Naan",
+        "description": "A traditional leavened flatbread with a soft heart and crisp edges—fresh from our clay oven.",
+        "price": "€2.80",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Tandoori Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Chilly Naan",
+        "description": "Spiced with chopped green chilies—soft, fiery, and unforgettable.",
+        "price": "€2.90",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Chilly Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Peshawari Naan",
+        "description": "Stuffed with a sweet mix of coconut, raisins, and nuts—rich, aromatic, and royally indulgent.",
+        "price": "€3.80",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Peshawari Naan.png",
+        "allergenCodes": [1, 7, 8]
+      },
+      {
+        "name": "Cheese Chilly Garlic Naan",
+        "description": "A fiery, cheesy indulgence—stuffed with molten cheese, green chilies, and garlic, baked to spicy perfection.",
+        "price": "€4.20",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/BREADS/Cheese Chilly Garlic Naan.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "The Saffron Lounge Special Cheese Garlic Coriander Keema Onion Naan",
+        "description": "A royal feast in itself—lavishly stuffed with minced meat, cheese, garlic, coriander, and onions. Bold, aromatic, and truly luxurious.",
+        "price": "€5.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/BREADS/The Saffron Lounge Special Cheese Garlic Coriander Keema Onion Naan.png",
+        "allergenCodes": [1, 7, 10]
+      }
+    ]
+  },
+  
+      {
+        "name": "Vegan Mains",
+        "type": "All",
+        "description": "A celebration of India's vibrant plant-based cuisine—bold spices, rustic textures, and deep, soulful flavors, crafted without dairy or animal products.",
+        "items": [
+          {
+            "name": "Veg Meat Kadhai",
+            "description": "Succulent plant-based protein simmered with bell peppers, onions, and bold spices in a thick, tangy tomato masala—fiery, hearty, and full of character.",
+            "price": "€10.90",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [1, 6, 10]
+          },
+          {
+            "name": "Mix Veg",
+            "description": "A wholesome medley of seasonal vegetables cooked in a mildly spiced, homestyle curry—colorful, comforting, and full of soul.",
+            "price": "€9.90",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Chana Masala",
+            "description": "Chickpeas slow-cooked in a robust onion-tomato gravy with warming spices—earthy, tangy, and deeply satisfying.",
+            "price": "€9.50",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/recipe-7.webp",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Aaloo Gobhi",
+            "description": "Cauliflower and potatoes tossed in turmeric, cumin, and fresh herbs—dry-fried for that perfect rustic bite.",
+            "price": "€9.50",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Saag Aaloo",
+            "description": "Tender potatoes simmered in spiced spinach puree—lush, vibrant, and rich with iron and flavor.",
+            "price": "€9.50",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Mushroom Masala",
+            "description": "Button mushrooms cooked in a rich, spiced tomato-onion gravy—earthy, creamy (without cream), and deliciously umami.",
+            "price": "€10.50",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          },
+          {
+            "name": "Daal Tadka",
+            "description": "Golden lentils tempered with garlic, cumin, and red chilies—simple, smoky, and soul-warming.",
+            "price": "€9.00",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [7]
+          },
+          {
+            "name": "Veg Kofta",
+            "description": "Crisp vegetable dumplings in a spiced tomato-cashew gravy—luxurious, satisfying, and dairy-free indulgence.",
+            "price": "€10.90",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [1, 7]
+          },
+          {
+            "name": "Bhindi Bhaji",
+            "description": "Okra stir-fried with onions, tomatoes, and house spices—dry, flavorful, and full of texture.",
+            "price": "€10.50",
+            "dietaryNotes": ["Vegan"],
+            "image": "/assets-main/menu/coming-soon.png",
+            "allergenCodes": [10]
+          }
+        ]
+      },
+  
+  
+     {
+    "name": "Drinks",
+    "type": "All",
+    "description": "Crafted to cool, soothe, and enchant—our drinks are steeped in tradition and poured with love. Whether it's a creamy lassi or a spiced tea, each sip is a celebration of India's vibrant spirit.",
+    "items": [
+      {
+        "name": "Mango Lassi",
+        "description": "A velvety blend of sweet mango and churned yogurt—smooth, golden, and luxuriously cooling.",
+        "price": "€4.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DRINKS/Mango Lassi.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Salted Lassi",
+        "description": "A classic from Indian homes—savory, creamy yogurt drink kissed with roasted cumin for a refreshing twist.",
+        "price": "€4.00",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DRINKS/Salted Lassi.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Sweet Lassi",
+        "description": "Light, creamy, and delicately sweet—this chilled yogurt elixir is a gentle hug for your palate.",
+        "price": "€4.00",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DRINKS/Sweet Lassi.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Masala Chai",
+        "description": "Fragrant black tea simmered with warming spices and milk—soul-stirring, comforting, and deeply aromatic.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DRINKS/Masala Chai.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Soft Drinks",
+        "description": "Familiar fizzy favorites—served chilled to balance the rich warmth of your meal.",
+        "price": "€2.50",
+        "dietaryNotes": ["Vegan"],
+        "image": "/assets-main/menu/DRINKS/Soft Drinks.png",
+        "allergenCodes": []
+      },
+      {
+        "name": "Lemon Soda",
+        "description": "Sparkling, tangy, and enlivened with fresh lemon juice—a zesty refresher with every bubbly sip.",
+        "price": "€3.00",
+        "dietaryNotes": ["Vegan"],
+        "image": "/assets-main/menu/DRINKS/Lemon Soda.png",
+        "allergenCodes": []
+      },
+      {
+        "name": "Masala Soda",
+        "description": "India's beloved spiced fizz—punchy, zesty, and packed with chatpata (tangy-spicy) flair.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegan"],
+        "image": "/assets-main/menu/DRINKS/Masala Soda.png",
+        "allergenCodes": []
+      }
+    ]
+  }
+  ,
+      {
+    "name": "Desserts",
+    "type": "All",
+    "description": "Sweetened with tradition, scented with saffron, and served with warmth—our desserts are a tribute to India's love affair with indulgence.",
+    "items": [
+      {
+        "name": "Gulab Jamun",
+        "description": "Soft, golden dumplings soaked in rose-scented syrup—warm, melt-in-the-mouth, and utterly divine.",
+        "price": "€4.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DESSERTS/Gulab Jamun.png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Gajar Halwa",
+        "description": "Carrots lovingly slow-cooked in milk, ghee, and sugar, studded with nuts—warm, rich, and soul-stirring.",
+        "price": "€5.25",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DESSERTS/Gajar Halwa.png",
+        "allergenCodes": [7, 8]
+      },
+      {
+        "name": "Mango Kulfi",
+        "description": "Traditional Indian ice cream—dense, creamy, and frozen with flavor of mango. A royal finale.",
+        "price": "€4.95",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DESSERTS/Mango Kulfi.png",
+        "allergenCodes": [7, 8]
+      },
+      {
+        "name": "Pistachio Kulfi",
+        "description": "Traditional Indian ice cream—dense, creamy, and frozen with flavors of pistachio. A royal finale.",
+        "price": "€4.95",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/DESSERTS/Pistachio Kulfi.png",
+        "allergenCodes": [7, 8]
+      }
+    ]
+  }
+  ,
+      {
+    "name": "Kids' Menu",
+    "type": "All",
+    "description": "Little bites, big smiles—Indian flavors made gentle, joyful, and just right for young appetites.",
+    "items": [
+      {
+        "name": "Cheesy Naan Pizza",
+        "description": "A fun twist—naan bread topped with melted cheese and a light tomato masala base. Perfect for little hands!",
+        "price": "€5.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Cheesy Naan Pizza .png",
+        "allergenCodes": [1, 7]
+      },
+      {
+        "name": "Mini Butter Chicken Pizza",
+        "description": "Naan pizza with creamy butter chicken sauce and cheese—mild, rich, and kid-friendly.",
+        "price": "€6.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Mini Butter Chicken Pizza.png",
+        "allergenCodes": [1, 7, 10]
+      },
+      {
+        "name": "Mini Butter Paneer Pizza",
+        "description": "A vegetarian version with soft paneer in a buttery tomato sauce, topped with cheese on a warm naan base.",
+        "price": "€6.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Mini Butter Paneer Pizza.png",
+        "allergenCodes": [1, 7, 10]
+      },
+      {
+        "name": "Fish Fingers & Chips",
+        "description": "Crispy fish fingers served with golden fries—a classic kids' favorite.",
+        "price": "€6.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Fish Fingers & Chips.png",
+        "allergenCodes": [1, 4]
+      },
+      {
+        "name": "Chicken Nuggets & Chips",
+        "description": "Juicy chicken nuggets paired with a side of fries—crunchy, satisfying, and always a hit.",
+        "price": "€6.50",
+        "dietaryNotes": ["Non-Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Chicken Nuggets & Chips.png",
+        "allergenCodes": [1, 3, 6]
+      },
+      {
+        "name": "Mini Poppadoms & Dip",
+        "description": "Tiny lentil crisps with a mango chutney—crunchy, sweet, and fun to munch.",
+        "price": "€2.00",
+        "dietaryNotes": ["Vegan"],
+        "image": "/assets-main/menu/KID’S MENU/Mini Poppadoms & Dip.png",
+        "allergenCodes": [10]
+      },
+      {
+        "name": "Plain Fries",
+        "description": "Lightly salted and golden-fried—simple, crispy goodness.",
+        "price": "€3.00",
+        "dietaryNotes": ["Vegan"],
+        "image": "/assets-main/menu/KID’S MENU/Plain Fries.png"
+      },
+      {
+        "name": "Cheesy Fries",
+        "description": "Fries topped with gooey melted cheese—extra fun, extra flavor.",
+        "price": "€4.00",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Cheesy Fries.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Mango Lassi",
+        "description": "A sweet, creamy yogurt drink made with ripe mango—cooling and loved by kids.",
+        "price": "€3.50",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Mango Lassi.png",
+        "allergenCodes": [7]
+      },
+      {
+        "name": "Vanilla Ice Cream with Chocolate Sauce",
+        "description": "A classic scoop with a chocolatey drizzle—perfect for happy endings.",
+        "price": "€3.00",
+        "dietaryNotes": ["Vegetarian"],
+        "image": "/assets-main/menu/KID’S MENU/Vanilla Ice Cream with Chocolate Sauce.png",
+        "allergenCodes": [7, 8]
+      }
+    ]
+  }
+  
+    ]
+  }
+  
