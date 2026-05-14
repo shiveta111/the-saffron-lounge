@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "David Miller",
+    "role": "Head Chef",
+    "image": "/assets/img/team/team-1.webp",
+    "bio": "With over 15 years of culinary experience, David brings innovative techniques to traditional recipes.",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Sophia Williams",
+    "role": "Sous Chef",
+    "image": "/assets/img/team/team-2.webp",
+    "bio": "Sophia specializes in pastry and dessert creations, ensuring every sweet ending to your meal.",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#"
+    }
+  },
+  {
+    "id": 3,
+    "name": "James Wilson",
+    "role": "Restaurant Manager",
+    "image": "/assets/img/team/team-3.webp",
+    "bio": "James ensures seamless operations and exceptional service for all our valued guests.",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Maria Rodriguez",
+    "role": "Wine Sommelier",
+    "image": "/assets/img/team/team-1.webp",
+    "bio": "Maria curates our extensive wine collection and helps guests find the perfect pairing for their meals.",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Alex Chen",
+    "role": "Pastry Chef",
+    "image": "/assets/img/team/team-2.webp",
+    "bio": "Alex creates stunning desserts and pastries that are both visually appealing and delicious.",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#"
+    }
+  }
+]

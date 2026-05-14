@@ -1,0 +1,185 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - production
+      - staging
+
+jobs:
+  deploy:
+    name: Deploy to ${{ github.ref_name }} environment
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Create deployment directory
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          # Set environment-specific variables
+          if [ "${{ github.ref_name }}" == "production" ]; then
+            DEPLOY_PATH="${{ secrets.PRODUCTION_DEPLOY_PATH }}"
+            PM2_APP_NAME="${{ secrets.PRODUCTION_PM2_APP_NAME }}"
+          else
+            DEPLOY_PATH="${{ secrets.STAGING_DEPLOY_PATH }}"
+            PM2_APP_NAME="${{ secrets.STAGING_PM2_APP_NAME }}"
+          fi
+          
+          # Check if project directory exists on server
+          echo "Checking if project exists on server..."
+          if ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "[ -d '$DEPLOY_PATH' ]"; then
+            echo "Project directory exists. Pulling latest changes..."
+            ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+              cd $DEPLOY_PATH &&
+              git fetch origin &&
+              git reset --hard origin/${{ github.ref_name }} &&
+              echo 'Git pull completed successfully'
+            "
+          else
+            echo "Project directory does not exist. Cloning repository..."
+            ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+              mkdir -p $(dirname $DEPLOY_PATH) &&
+              git clone -b ${{ github.ref_name }} ${{ secrets.REPO_URL }} $DEPLOY_PATH &&
+              echo 'Repository cloned successfully'
+            "
+          fi
+          
+          # Deploy application
+          echo "Deploying application..."
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            cd $DEPLOY_PATH &&
+            export NODE_ENV=${{ github.ref_name }} &&
+            npm ci --only=production &&
+            npm run build &&
+            npx prisma generate &&
+            npx prisma migrate deploy &&
+            pm2 reload ecosystem.config.js --env ${{ github.ref_name }} || pm2 start ecosystem.config.js --env ${{ github.ref_name }}
+          "
+          
+          # Check application health
+          echo "Checking application health..."
+          sleep 10
+          HEALTH_CHECK=$(ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            curl -f http://localhost:${{ secrets.APP_PORT }}/api/health || exit 1
+          ")
+          
+          if [ -z "$HEALTH_CHECK" ]; then
+            echo "Health check failed"
+            exit 1
+          else
+            echo "Health check passed: $HEALTH_CHECK"
+          fi
+          
+      - name: Notify on success
+        if: success()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "Deployment Successful",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Deployment Successful :rocket:"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n${{ github.sha }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Notify on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "Deployment Failed",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Deployment Failed :rotating_light:"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n${{ github.sha }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Error:*\nCheck GitHub Actions logs for details"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

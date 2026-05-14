@@ -1,0 +1,9 @@
+export { StatsCard } from './StatsCard';
+export { EmptyState } from './EmptyState';
+export { DashboardHeader } from './DashboardHeader';
+export { DashboardSidebar } from './DashboardSidebar';
+export { StatsOverview } from './StatsOverview';
+export { RecentOrders } from './RecentOrders';
+export { UpcomingReservations } from './UpcomingReservations';
+export { QuickActions } from './QuickActions';
+export { ProfileSection } from './ProfileSection';
