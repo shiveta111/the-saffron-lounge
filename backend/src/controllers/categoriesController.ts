@@ -76,8 +76,8 @@ export const getAllCategories = async (req: Request, res: Response) => {
     const where: any = {};
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } }
+        { name: { contains: search } },
+        { description: { contains: search } }
       ];
     }
     if (isActive !== undefined) {

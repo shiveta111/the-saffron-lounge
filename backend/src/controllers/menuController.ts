@@ -179,8 +179,8 @@ export const getAllMenuItems = async (req: Request, res: Response) => {
     if (isAvailable !== undefined) where.isAvailable = isAvailable;
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
+        { name: { contains: search } },
+        { description: { contains: search } },
       ];
     }
 

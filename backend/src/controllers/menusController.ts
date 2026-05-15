@@ -29,8 +29,8 @@ export const getMenus = async (req: Request, res: Response) => {
 
     if (search) {
       where.OR = [
-        { name: { contains: search as string, mode: 'insensitive' } },
-        { description: { contains: search as string, mode: 'insensitive' } },
+        { name: { contains: search as string } },
+        { description: { contains: search as string } },
       ];
     }
 
@@ -206,7 +206,6 @@ export const getCategories = async (req: Request, res: Response) => {
     if (search) {
       where.name = {
         contains: search as string,
-        mode: 'insensitive',
       };
     }
 

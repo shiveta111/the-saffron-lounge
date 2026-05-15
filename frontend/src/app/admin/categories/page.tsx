@@ -37,6 +37,11 @@ export default function CategoryManagementPage() {
 
   const queryClient = useQueryClient();
 
+  // Track latest fetch ID to discard stale out-of-order responses
+  const fetchIdRef = useRef(0);
+  // Always points to the latest fetchCategories so real-time handlers don't stale-close
+  const fetchCategoriesRef = useRef<() => Promise<void>>(async () => {});
+
   const form = useForm<CreateCategoryData>({
     resolver: zodResolver(createCategorySchema),
     defaultValues: {
@@ -46,34 +51,40 @@ export default function CategoryManagementPage() {
   });
 
   const fetchCategories = async () => {
+    const fetchId = ++fetchIdRef.current;
     try {
       setLoading(true);
-      const params: any = {};
+      const params: any = { limit: 100 };
 
-      // Only add search parameter if searchTerm is not empty
       if (searchTerm && searchTerm.trim().length > 0) {
         params.search = searchTerm.trim();
       }
 
       const response = await apiClient.getCategories(params);
-      console.log('📥 Categories API Response:', response);
-      
+
+      // Discard this response if a newer fetch has already been started
+      if (fetchId !== fetchIdRef.current) return;
+
       if (response.success) {
-        // Handle multiple response structures
         const categoriesData = response.data?.categories || response.data?.data || response.data || response.categories || [];
-        console.log('✅ Extracted categories:', Array.isArray(categoriesData) ? categoriesData.length : 0, 'categories');
         setCategories(Array.isArray(categoriesData) ? categoriesData : []);
       } else {
         setCategories([]);
       }
     } catch (error: any) {
+      if (fetchId !== fetchIdRef.current) return;
       console.error('Failed to load categories:', error);
       toast.error('Failed to load categories');
       setCategories([]);
     } finally {
-      setLoading(false);
+      if (fetchId === fetchIdRef.current) {
+        setLoading(false);
+      }
     }
   };
+
+  // Keep the ref in sync so real-time handlers always call the latest version
+  fetchCategoriesRef.current = fetchCategories;
 
   useEffect(() => {
     fetchCategories();
@@ -81,7 +92,6 @@ export default function CategoryManagementPage() {
 
   // Real-time updates subscription
   useEffect(() => {
-    // Connect to WebSocket and subscribe to categories room
     websocketService.connect();
     websocketService.subscribe('admin');
     websocketService.subscribe('categories');
@@ -90,19 +100,19 @@ export default function CategoryManagementPage() {
 
     subscriptionIds.push(subscribe('CATEGORY_CREATED', (event) => {
       console.log('Real-time category created:', event);
-      fetchCategories();
+      fetchCategoriesRef.current();
       setLastUpdate(new Date());
     }));
 
     subscriptionIds.push(subscribe('CATEGORY_UPDATED', (event) => {
       console.log('Real-time category updated:', event);
-      fetchCategories();
+      fetchCategoriesRef.current();
       setLastUpdate(new Date());
     }));
 
     subscriptionIds.push(subscribe('CATEGORY_DELETED', (event) => {
       console.log('Real-time category deleted:', event);
-      fetchCategories();
+      fetchCategoriesRef.current();
       setLastUpdate(new Date());
     }));
 
@@ -236,7 +246,7 @@ export default function CategoryManagementPage() {
         <div className="flex gap-2">
           <Button
             variant="outline"
-            onClick={() => queryClient.invalidateQueries({ queryKey: queryKeys.categories })}
+            onClick={() => fetchCategories()}
             disabled={loading}
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
