@@ -40,13 +40,23 @@ export const serveUploadedImage = async (req: Request, res: Response) => {
       sanitizedFilename
     );
 
-    // Check if file exists
+    // Check if file exists — serve placeholder silently if missing
     if (!fs.existsSync(filePath)) {
-      console.log(`Image not found: ${filePath}`);
-      return res.status(404).json({
-        success: false,
-        error: 'Image not found',
-      });
+      const fallbackPath = path.join(
+        process.cwd(),
+        'public',
+        'assets',
+        'uploads',
+        'menu-items',
+        'coming-soon-1765125090194-848291736.png'
+      );
+      if (fs.existsSync(fallbackPath)) {
+        res.setHeader('Content-Type', 'image/png');
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        return fs.createReadStream(fallbackPath).pipe(res);
+      }
+      return res.status(404).json({ success: false, error: 'Image not found' });
     }
 
     // Get file stats for headers
