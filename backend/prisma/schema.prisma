@@ -153,13 +153,14 @@ model Product {
   nutritionalInfo String?  @db.Text
   sku             String?  @unique @db.VarChar(100) 
    
-  menuProducts    MenuProduct[] 
-  inventory       Inventory?
-  orderItems      OrderItem[]
-  cartItems       CartItem[]
-  priceHistory    ProductPriceHistory[]
-  menuCategory    Category?           @relation("ProductCategory", fields: [categoryId], references: [id])
-  promotions      Promotion[]         @relation("promotionapplicableitems")
+  menuProducts         MenuProduct[]
+  inventory            Inventory?
+  orderItems           OrderItem[]
+  cartItems            CartItem[]
+  priceHistory         ProductPriceHistory[]
+  menuCategory         Category?                @relation("ProductCategory", fields: [categoryId], references: [id])
+  promotions           Promotion[]              @relation("promotionapplicableitems")
+  productCategoryLinks ProductCategoryLink[]    @relation("ProductCategoryLinkToProduct")
 
   @@index([category])
   @@index([type])
@@ -187,13 +188,25 @@ model Category {
   createdAt   DateTime  @default(now()) @db.Timestamp(6)
   updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamp(6)
   type        String?   @db.VarChar(50)
-  menus       Menu[]    @relation("MenuCategory")
-  products    Product[] @relation("ProductCategory")
+  menus                Menu[]                @relation("MenuCategory")
+  products             Product[]             @relation("ProductCategory")
+  productCategoryLinks ProductCategoryLink[] @relation("ProductCategoryLinkToCategory")
 
   @@index([isActive])
   @@index([sortOrder])
   @@index([type])
   @@map("categories")
+}
+
+model ProductCategoryLink {
+  productId  Int
+  categoryId Int
+  product    Product  @relation("ProductCategoryLinkToProduct", fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation("ProductCategoryLinkToCategory", fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@index([categoryId])
+  @@map("product_category_links")
 }
 
 model Order {

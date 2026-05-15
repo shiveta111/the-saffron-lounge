@@ -57,12 +57,11 @@ export const menuSchemas = {
  */
 export const productSchemas = {
   create: Joi.object({
-    // menuId removed - products are created independently, linked to menus via junction table
     name: Joi.string().min(2).max(100).required(),
     description: Joi.string().max(500).optional().allow('', null),
     price: customValidators.price().required(),
-    // category removed - auto-populated from categoryId
-    categoryId: customValidators.id().required(),
+    categoryId: customValidators.id().optional(),
+    categoryIds: Joi.array().items(Joi.number().integer().min(1)).min(1).optional(),
     type: Joi.string().valid('Vegetarian', 'Non-Vegetarian', 'All', 'Vegan').optional().allow('', null),
     imageUrl: customValidators.url().optional().allow('', null),
     availability: Joi.number().integer().min(0).optional().default(10),
@@ -72,15 +71,14 @@ export const productSchemas = {
     isAvailable: Joi.boolean().optional().default(true),
     preparationTime: Joi.number().integer().min(0).optional().allow(null),
     nutritionalInfo: Joi.string().optional().allow('', null),
-  }),
+  }).or('categoryId', 'categoryIds'),
 
   update: Joi.object({
-    // menuId removed - products are linked to menus via junction table
     name: Joi.string().min(2).max(100).optional(),
     description: Joi.string().max(500).optional().allow(''),
     price: customValidators.price().optional(),
-    // category removed - auto-populated from categoryId
     categoryId: customValidators.id().optional(),
+    categoryIds: Joi.array().items(Joi.number().integer().min(1)).min(1).optional(),
     type: Joi.string().valid('Vegetarian', 'Non-Vegetarian', 'All', 'Vegan').optional(),
     imageUrl: customValidators.url().optional().allow(''),
     availability: Joi.number().integer().min(0).optional(),
