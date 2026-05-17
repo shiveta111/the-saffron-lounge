@@ -81,7 +81,7 @@ export const getAllInventory = async (req: Request, res: Response) => {
     }
 
     if (supplier) {
-      where.supplier = { contains: supplier, mode: 'insensitive' };
+      where.supplier = { contains: supplier };
     }
 
     // Get inventory with product details

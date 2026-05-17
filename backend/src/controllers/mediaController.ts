@@ -101,7 +101,6 @@ export const getAllMedia = async (req: Request, res: Response) => {
       ? {
           name: {
             contains: search,
-            mode: 'insensitive' as const,
           },
         }
       : {};

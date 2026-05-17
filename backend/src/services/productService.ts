@@ -73,7 +73,8 @@ interface CreateProductData {
   name: string;
   description?: string;
   price: number;
-  categoryId: number;
+  categoryId?: number;
+  categoryIds?: number[];
   type?: string;
   imageUrl?: string;
   availability?: number;
@@ -88,6 +89,7 @@ interface UpdateProductData {
   description?: string;
   price?: number;
   categoryId?: number;
+  categoryIds?: number[];
   type?: string;
   imageUrl?: string;
   availability?: number;
@@ -161,7 +163,14 @@ class ProductService {
     const where: any = {};
 
     if (filters.category) {
-      where.category = filters.category;
+      where.AND = where.AND || [];
+      where.AND.push({
+        OR: [
+          { category: filters.category },
+          { menuCategory: { name: filters.category } },
+          { productCategoryLinks: { some: { category: { name: filters.category } } } },
+        ],
+      });
     }
 
     if (filters.type) {
@@ -182,11 +191,14 @@ class ProductService {
     }
 
     if (filters.search) {
-      where.OR = [
-        { name: { contains: filters.search } },
-        { description: { contains: filters.search } },
-        { sku: { contains: filters.search } },
-      ];
+      where.AND = where.AND || [];
+      where.AND.push({
+        OR: [
+          { name: { contains: filters.search } },
+          { description: { contains: filters.search } },
+          { sku: { contains: filters.search } },
+        ],
+      });
     }
 
     try {
@@ -195,11 +207,11 @@ class ProductService {
         include: {
           menuProducts: true,
           menuCategory: {
-            select: {
-              id: true,
-              name: true,
-              type: true,
-              description: true,
+            select: { id: true, name: true, type: true, description: true },
+          },
+          productCategoryLinks: {
+            include: {
+              category: { select: { id: true, name: true } },
             },
           },
         },
@@ -216,7 +228,7 @@ class ProductService {
     } catch (error: any) {
       // If menu relations are inconsistent (or Prisma client/schema is out of sync),
       // fallback to a menu-safe query so product listing still works.
-      if (error.code === 'P2022' || error.code === 'P2009' || 
+      if (error.code === 'P2022' || error.code === 'P2009' ||
           (error.message && (
             error.message.includes('menuProducts') ||
             error.message.includes('menuId') ||
@@ -229,13 +241,13 @@ class ProductService {
         const products = await prisma.product.findMany({
           where,
           include: {
-                menuProducts: true,
+            menuProducts: true,
             menuCategory: {
-              select: {
-                id: true,
-                name: true,
-                type: true,
-                description: true,
+              select: { id: true, name: true, type: true, description: true },
+            },
+            productCategoryLinks: {
+              include: {
+                category: { select: { id: true, name: true } },
               },
             },
           },
@@ -245,8 +257,6 @@ class ProductService {
           ],
         });
         const hydratedProducts = await this.attachMenuDetailsToProducts(products);
-        
-        // Return products without menuProducts relation
         return hydratedProducts.map(product => this.parseProductData(product));
       }
       throw error;
@@ -258,28 +268,27 @@ class ProductService {
    */
   async getProductById(id: number) {
     let product: any;
+    const productInclude = {
+      menuProducts: true,
+      menuCategory: true,
+      inventory: true,
+      productCategoryLinks: {
+        include: { category: { select: { id: true, name: true } } },
+      },
+    };
     try {
       product = await prisma.product.findUnique({
         where: { id },
-        include: {
-          menuProducts: true,
-          menuCategory: true,
-          inventory: true,
-        },
+        include: productInclude,
       });
     } catch (error: any) {
       if (error.message && (
         error.message.includes('Inconsistent query result') ||
         error.message.includes('Field menu is required to return data')
       )) {
-        // Fallback when orphaned menu relations exist.
         product = await prisma.product.findUnique({
           where: { id },
-          include: {
-            menuProducts: true,
-            menuCategory: true,
-            inventory: true,
-          },
+          include: productInclude,
         });
       } else {
         throw error;
@@ -300,28 +309,27 @@ class ProductService {
    */
   async getProductBySlug(slug: string) {
     let product: any;
+    const slugInclude = {
+      menuProducts: true,
+      menuCategory: true,
+      inventory: true,
+      productCategoryLinks: {
+        include: { category: { select: { id: true, name: true } } },
+      },
+    };
     try {
       product = await prisma.product.findUnique({
         where: { slug },
-        include: {
-          menuProducts: true,
-          menuCategory: true,
-          inventory: true,
-        },
+        include: slugInclude,
       });
     } catch (error: any) {
       if (error.message && (
         error.message.includes('Inconsistent query result') ||
         error.message.includes('Field menu is required to return data')
       )) {
-        // Fallback when orphaned menu relations exist.
         product = await prisma.product.findUnique({
           where: { slug },
-          include: {
-            menuProducts: true,
-            menuCategory: true,
-            inventory: true,
-          },
+          include: slugInclude,
         });
       } else {
         throw error;
@@ -340,113 +348,239 @@ class ProductService {
   /**
    * Create new product with optional menu linkage
    */
-  async createProduct(data: CreateProductData) {
-    // Validate categoryId and get category details
-    const category = await validateAndGetCategory(data.categoryId);
+ /**
+ * Create new product with optional menu linkage
+ */
+async createProduct(data: CreateProductData) {
 
-    // Generate unique slug from product name
-    const slug = await ensureUniqueSlug(generateSlug(data.name));
+  // Resolve categoryIds — support both single categoryId and array
+  const categoryIds: number[] =
+    data.categoryIds && data.categoryIds.length > 0
+      ? data.categoryIds
+      : data.categoryId !== undefined
+        ? [data.categoryId]
+        : [];
 
-    // Create product (products are created independently, linked to menus via junction table)
-    const product = await prisma.product.create({
-      data: {
-        name: data.name,
-        slug,
-        description: data.description || null,
-        price: data.price,
-        categoryId: data.categoryId,
-        category: category.name, // Auto-populate from category relationship
-        type: data.type || null,
-        imageUrl: data.imageUrl || null,
-        availability: data.availability || 10,
-        sku: data.sku || null,
-        dietaryNotes: data.dietaryNotes ? JSON.stringify(data.dietaryNotes) : null,
-        allergenCodes: data.allergenCodes ? JSON.stringify(data.allergenCodes) : null,
-        isAvailable: data.isAvailable !== undefined ? data.isAvailable : true,
-      },
-      include: {
-        menuProducts: true,
-        menuCategory: true,
-      },
-    });
-
-    const hydratedProduct = await this.attachMenuDetailsToProduct(product);
-
-    // Broadcast WebSocket event
-    wsManager.broadcastToRoom('products', 'PRODUCT_CREATED', {
-      product: this.parseProductData(hydratedProduct),
-    });
-
-    return this.parseProductData(hydratedProduct);
+  if (categoryIds.length === 0) {
+    throw new Error('At least one category is required');
   }
 
-  /**
-   * Update product
-   */
-  async updateProduct(id: number, data: UpdateProductData) {
-    // Check if product exists
-    const existingProduct = await prisma.product.findUnique({
-      where: { id },
-    });
+  const primaryCategoryId = categoryIds[0];
 
-    if (!existingProduct) {
-      throw new Error('Product not found');
-    }
-
-    // Prepare update data
-    const updateData: any = {};
-
-    // Handle category update
-    if (data.categoryId !== undefined && data.categoryId !== existingProduct.categoryId) {
-      const category = await validateAndGetCategory(data.categoryId);
-      updateData.categoryId = data.categoryId;
-      updateData.category = category.name; // Auto-update category string
-    }
-
-    // Handle name update - regenerate slug
-    if (data.name !== undefined && data.name !== existingProduct.name) {
-      updateData.name = data.name;
-      updateData.slug = await ensureUniqueSlug(generateSlug(data.name), id);
-    }
-
-    // Note: imageUrl is uploaded separately via /api/upload/product-image endpoint
-    // Here we just update the string path if provided
-    if (data.description !== undefined) updateData.description = data.description;
-    if (data.price !== undefined) updateData.price = data.price;
-    if (data.type !== undefined) updateData.type = data.type;
-    if (data.imageUrl !== undefined) updateData.imageUrl = data.imageUrl;
-    if (data.availability !== undefined) updateData.availability = data.availability;
-    if (data.sku !== undefined) updateData.sku = data.sku;
-    if (data.isAvailable !== undefined) updateData.isAvailable = data.isAvailable;
-
-    if (data.dietaryNotes !== undefined) {
-      updateData.dietaryNotes = JSON.stringify(data.dietaryNotes);
-    }
-
-    if (data.allergenCodes !== undefined) {
-      updateData.allergenCodes = JSON.stringify(data.allergenCodes);
-    }
-
-    // Update product
-    const product = await prisma.product.update({
-      where: { id },
-      data: updateData,
-      include: {
-        menuProducts: true,
-        menuCategory: true,
-      },
-    });
-
-    const hydratedProduct = await this.attachMenuDetailsToProduct(product);
-
-    // Broadcast WebSocket event
-    wsManager.broadcastToRoom('products', 'PRODUCT_UPDATED', {
-      product: this.parseProductData(hydratedProduct),
-    });
-
-    return this.parseProductData(hydratedProduct);
+  if (primaryCategoryId === undefined) {
+    throw new Error('Primary category is required');
   }
 
+  // Validate all categories and use the first as the primary
+  const primaryCategory = await validateAndGetCategory(primaryCategoryId);
+
+  for (const cid of categoryIds.slice(1)) {
+    await validateAndGetCategory(cid);
+  }
+
+  // Generate unique slug from product name
+  const slug = await ensureUniqueSlug(generateSlug(data.name));
+
+  // Create product
+  const product = await prisma.product.create({
+    data: {
+      name: data.name,
+      slug,
+      description: data.description || null,
+      price: data.price,
+      categoryId: primaryCategoryId,
+      category: primaryCategory.name,
+      type: data.type || null,
+      imageUrl: data.imageUrl || null,
+      availability: data.availability || 10,
+      sku: data.sku || null,
+      dietaryNotes: data.dietaryNotes
+        ? JSON.stringify(data.dietaryNotes)
+        : null,
+      allergenCodes: data.allergenCodes
+        ? JSON.stringify(data.allergenCodes)
+        : null,
+      isAvailable:
+        data.isAvailable !== undefined
+          ? data.isAvailable
+          : true,
+
+      productCategoryLinks: {
+        create: categoryIds.map((cid) => ({
+          categoryId: cid,
+        })),
+      },
+    },
+
+    include: {
+      menuProducts: true,
+      menuCategory: true,
+
+      productCategoryLinks: {
+        include: {
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const hydratedProduct = await this.attachMenuDetailsToProduct(product);
+
+  // Broadcast WebSocket event
+  wsManager.broadcastToRoom('products', 'PRODUCT_CREATED', {
+    product: this.parseProductData(hydratedProduct),
+  });
+
+  return this.parseProductData(hydratedProduct);
+}
+
+/**
+ * Update product
+ */
+async updateProduct(id: number, data: UpdateProductData) {
+
+  // Check if product exists
+  const existingProduct = await prisma.product.findUnique({
+    where: { id },
+  });
+
+  if (!existingProduct) {
+    throw new Error('Product not found');
+  }
+
+  // Prepare update data
+  const updateData: any = {};
+
+  // Handle category update
+  const newCategoryIds: number[] | null =
+    data.categoryIds && data.categoryIds.length > 0
+      ? data.categoryIds
+      : data.categoryId !== undefined
+        ? [data.categoryId]
+        : null;
+
+  if (newCategoryIds && newCategoryIds.length > 0) {
+
+    const primaryCategoryId = newCategoryIds[0];
+
+    if (primaryCategoryId === undefined) {
+      throw new Error('Primary category is required');
+    }
+
+    const primaryCategory = await validateAndGetCategory(primaryCategoryId);
+
+    for (const cid of newCategoryIds.slice(1)) {
+      await validateAndGetCategory(cid);
+    }
+
+    updateData.categoryId = primaryCategoryId;
+    updateData.category = primaryCategory.name;
+  }
+
+  // Handle name update - regenerate slug
+  if (
+    data.name !== undefined &&
+    data.name !== existingProduct.name
+  ) {
+    updateData.name = data.name;
+
+    updateData.slug = await ensureUniqueSlug(
+      generateSlug(data.name),
+      id
+    );
+  }
+
+  // Optional updates
+  if (data.description !== undefined) {
+    updateData.description = data.description;
+  }
+
+  if (data.price !== undefined) {
+    updateData.price = data.price;
+  }
+
+  if (data.type !== undefined) {
+    updateData.type = data.type;
+  }
+
+  if (data.imageUrl !== undefined) {
+    updateData.imageUrl = data.imageUrl;
+  }
+
+  if (data.availability !== undefined) {
+    updateData.availability = data.availability;
+  }
+
+  if (data.sku !== undefined) {
+    updateData.sku = data.sku;
+  }
+
+  if (data.isAvailable !== undefined) {
+    updateData.isAvailable = data.isAvailable;
+  }
+
+  if (data.dietaryNotes !== undefined) {
+    updateData.dietaryNotes = JSON.stringify(data.dietaryNotes);
+  }
+
+  if (data.allergenCodes !== undefined) {
+    updateData.allergenCodes = JSON.stringify(data.allergenCodes);
+  }
+
+  // Sync category links
+  if (newCategoryIds && newCategoryIds.length > 0) {
+
+    await prisma.productCategoryLink.deleteMany({
+      where: { productId: id },
+    });
+
+    await prisma.productCategoryLink.createMany({
+      data: newCategoryIds.map((cid) => ({
+        productId: id,
+        categoryId: cid,
+      })),
+
+      skipDuplicates: true,
+    });
+  }
+
+  // Update product
+  const product = await prisma.product.update({
+    where: { id },
+
+    data: updateData,
+
+    include: {
+      menuProducts: true,
+      menuCategory: true,
+
+      productCategoryLinks: {
+        include: {
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const hydratedProduct = await this.attachMenuDetailsToProduct(product);
+
+  // Broadcast WebSocket event
+  wsManager.broadcastToRoom('products', 'PRODUCT_UPDATED', {
+    product: this.parseProductData(hydratedProduct),
+  });
+
+  return this.parseProductData(hydratedProduct);
+}
   /**
    * Delete product with order existence check
    */
@@ -559,16 +693,23 @@ class ProductService {
    * Parse product data (convert JSON strings to objects and transform menuProducts)
    */
   private parseProductData(product: any) {
-    // Transform menuProducts array to menus array for backward compatibility
     const menus = product.menuProducts?.map((mp: any) => mp.menu).filter(Boolean) || [];
-    
+    const linkedCategories: { id: number; name: string }[] = (product.productCategoryLinks || [])
+      .map((pcl: any) => pcl.category)
+      .filter(Boolean);
+
+    // Fall back to the primary categoryId if no link records exist yet (legacy data)
+    const categoryIds: number[] = linkedCategories.length > 0
+      ? linkedCategories.map((c: any) => c.id)
+      : product.categoryId ? [product.categoryId] : [];
+
     return {
       ...product,
-      // Keep menuProducts for new structure
       menuProducts: product.menuProducts || [],
-      // Add menus array for backward compatibility (first menu if exists)
       menu: menus.length > 0 ? menus[0] : null,
-      menus: menus, // All menus this product belongs to
+      menus,
+      categories: linkedCategories.length > 0 ? linkedCategories : (product.menuCategory ? [product.menuCategory] : []),
+      categoryIds,
       dietaryNotes: this.safeParseJson(product.dietaryNotes, []),
       allergenCodes: this.safeParseJson(product.allergenCodes, []),
       nutritionalInfo: this.safeParseJson(product.nutritionalInfo, null),

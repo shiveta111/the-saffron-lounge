@@ -105,9 +105,9 @@ export const getAllBlogCategories = async (req: Request, res: Response): Promise
       const where: any = {};
       if (search) {
         where.OR = [
-          { name: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } },
-          { slug: { contains: search, mode: 'insensitive' } },
+          { name: { contains: search } },
+          { description: { contains: search } },
+          { slug: { contains: search } },
         ];
       }
       if (isActive !== undefined) {

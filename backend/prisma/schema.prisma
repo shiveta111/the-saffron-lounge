@@ -155,6 +155,8 @@ model Product {
    
   menuProducts    MenuProduct[] 
   inventory       Inventory?
+  // ADD THIS
+  productCategoryLinks ProductCategoryLink[] //added productCategoryLinks
   orderItems      OrderItem[]
   cartItems       CartItem[]
   priceHistory    ProductPriceHistory[]
@@ -189,11 +191,27 @@ model Category {
   type        String?   @db.VarChar(50)
   menus       Menu[]    @relation("MenuCategory")
   products    Product[] @relation("ProductCategory")
+  productCategoryLinks ProductCategoryLink[]
 
   @@index([isActive])
   @@index([sortOrder])
   @@index([type])
   @@map("categories")
+}
+
+model ProductCategoryLink {
+  productId  Int
+  categoryId Int
+
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+
+  @@index([productId])
+  @@index([categoryId])
+
+  @@map("product_category_links")
 }
 
 model Order {

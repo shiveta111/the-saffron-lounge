@@ -53,7 +53,7 @@ export default function ProductsManagementPage() {
   const router = useRouter();
 
   // Fetch products
-  const { data: productsResponse, isLoading, error, refetch } = useQuery({
+  const { data: productsResponse, isLoading, isFetching, error, refetch } = useQuery({
     queryKey: ['products', selectedCategory, searchTerm],
     queryFn: async () => {
       try {
@@ -94,7 +94,7 @@ export default function ProductsManagementPage() {
   const { data: categoriesResponse } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const response = await apiClient.getCategories();
+      const response = await apiClient.getCategories({ limit: 100 });
       return response;
     },
   });
@@ -267,13 +267,13 @@ export default function ProductsManagementPage() {
         {/* Header */}
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Product Management ttt</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Product Management</h1>
             <p className="text-gray-500 mt-1">Manage products linked to menu items</p>
           </div>
           <div className="flex gap-2">
-            <Button onClick={() => refetch()} variant="outline">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
+            <Button onClick={() => refetch()} variant="outline" disabled={isFetching}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? 'animate-spin' : ''}`} />
+              {isFetching ? 'Refreshing...' : 'Refresh'}
             </Button>
             <Button onClick={handleCreate}>
               <Plus className="h-4 w-4 mr-2" />
@@ -406,26 +406,26 @@ export default function ProductsManagementPage() {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Menu Link</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Stock</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>SKU</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredProducts.map((product: any) => (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Menu Link</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>Stock</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>SKU</TableHead>
+                    <TableHead className="sticky right-0 bg-white text-right shadow-[-4px_0_6px_-1px_rgba(0,0,0,0.07)]">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredProducts.map((product: any) => (
                       <TableRow key={product.id}>
                         <TableCell className="font-medium">{product.id}</TableCell>
-                        <TableCell> 
+                        <TableCell>
                           <div className="flex items-center gap-2">
                             <img
                               src={getImageUrl(product.imageUrl) || '/assets-main/menu/coming-soon.png'}
@@ -479,7 +479,7 @@ export default function ProductsManagementPage() {
                           )}
                         </TableCell>
                         <TableCell className="text-sm text-gray-500">{product.sku || 'N/A'}</TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="sticky right-0 bg-white text-right shadow-[-4px_0_6px_-1px_rgba(0,0,0,0.07)]">
                           <div className="flex justify-end gap-2">
                             <Button
                               size="sm"
