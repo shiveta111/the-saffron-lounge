@@ -748,15 +748,14 @@ const ShopPage = () => {
                     }}
                   >
                     <div className={`relative aspect-5/4 ${isMobile ? '' : 'group'}`}>
-                    <img
-                                src={getImageUrl(item.image) || ''}
-                                alt={item.name}
-                                className="h-80 w-100 rounded object-cover"
-                                onError={(e) => {
-                                  // Hide broken images
-                                  e.currentTarget.style.display = 'none';
-                                }}
-                              />
+                      <img
+                        src={getImageUrl(item.image) || ''}
+                        alt={item.name}
+                        className="absolute inset-0 w-full h-full rounded object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
                       {item.originalPrice && (
                         <div className="absolute top-2 left-2 bg-[#f36b24] text-[#241c1b] px-2 py-1 rounded-full text-xs font-bold z-10">
                           {t('Sale')}
