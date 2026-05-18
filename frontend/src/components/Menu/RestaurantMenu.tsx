@@ -7,10 +7,8 @@ import AllergenNote from '../AllergenNote';
 import { MenuItemDTO, CategoryDTO } from '../../services/menuService';
 import menuData from '../../data/menu.json';
 import { getMenuItemAllergens } from '../../lib/allergenUtils';
-import { ProductDetailsModal } from '../ProductDetailsModal';
-import { useAuth } from '../../lib/auth-context';
-import { LoginRequiredModal } from '../LoginRequiredModal';
 import { getImageUrl } from '../../lib/image-utils';
+import { env } from '../../lib/env';
 
 interface MenuItem {
   id: number;
@@ -26,7 +24,6 @@ interface MenuItem {
 }
 
 const RestaurantMenu = () => {
-  const { isAuthenticated } = useAuth();
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [menuItems, setMenuItems] = useState<MenuItemDTO[]>([]);
@@ -34,9 +31,8 @@ const RestaurantMenu = () => {
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  // Map of product name (lowercase) → uploaded imageUrl from API
+  const [productImageMap, setProductImageMap] = useState<Map<string, string>>(new Map());
 
   // Wrapper function to safely set categories - ensures it's always an array
   const setCategoriesSafe = (newCategories: any) => {
@@ -145,6 +141,23 @@ const RestaurantMenu = () => {
     }
   }, []);
 
+  // Fetch uploaded product images from API and build a name → imageUrl map
+  useEffect(() => {
+    fetch(`${env.apiUrl}/products?limit=500`, { cache: 'no-store' })
+      .then(r => r.json())
+      .then(json => {
+        const map = new Map<string, string>();
+        const items: any[] = Array.isArray(json?.data) ? json.data : [];
+        items.forEach(p => {
+          if (p?.name && p?.imageUrl) {
+            map.set(p.name.toLowerCase().trim(), p.imageUrl);
+          }
+        });
+        setProductImageMap(map);
+      })
+      .catch(() => {/* silently ignore — menu still works with static images */});
+  }, []);
+
 
   // Transform API data to match component structure
   const getAllMenuItems = (): MenuItem[] => {
@@ -154,10 +167,13 @@ const RestaurantMenu = () => {
         ? item.category 
         : item.category?.name || item.categoryRef?.name || 'Uncategorized';
       
-      // Convert relative image URL to absolute backend URL
-      const imageUrl = item.imageUrl 
-        ? (getImageUrl(item.imageUrl) || '/assets-main/menu/coming-soon.png')
-        : '/assets-main/menu/coming-soon.png';
+      // Use uploaded API image if available, otherwise fall back to static asset
+      const uploadedImage = productImageMap.get(item.name?.toLowerCase().trim() ?? '');
+      const imageUrl = uploadedImage
+        ? (getImageUrl(uploadedImage) || '/assets-main/menu/coming-soon.png')
+        : item.imageUrl
+          ? (getImageUrl(item.imageUrl) || '/assets-main/menu/coming-soon.png')
+          : '/assets-main/menu/coming-soon.png';
       
       // Safely handle price - ensure it's a number
       const priceValue = typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0;
@@ -332,16 +348,8 @@ const RestaurantMenu = () => {
                   const isComboPack = (item as any).menuProducts && (item as any).menuProducts.length > 0;
                   return (
                     <div key={item.id}>
-                      <div 
-                        className="flex gap-6 p-6 bg-[#18181c] rounded-lg border border-[#23232a] hover:border-[#f36b24] transition-all duration-300 group cursor-pointer"
-                        onClick={() => {
-                          if (!isAuthenticated) {
-                            setShowLoginModal(true);
-                            return;
-                          }
-                          setSelectedProductId(item.id);
-                          setShowProductModal(true);
-                        }}
+                      <div
+                        className="flex gap-6 p-6 bg-[#18181c] rounded-lg border border-[#23232a] hover:border-[#f36b24] transition-all duration-300 group"
                       >
                         <div className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0">
                           <Image
@@ -391,11 +399,6 @@ const RestaurantMenu = () => {
                                   Allergens: {getMenuItemAllergens(item)?.codes.join(', ')}
                                 </span>
                               )}
-                              {isComboPack && (
-                                <span className="text-xs text-[#f36b24] font-medium mt-1">
-                                  Click to view included products
-                                </span>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -409,25 +412,6 @@ const RestaurantMenu = () => {
         </div>
         <AllergenNote />
         </ResponsiveContainer>
-
-        {/* Product Details Modal */}
-        <ProductDetailsModal
-          isOpen={showProductModal}
-          onClose={() => {
-            setShowProductModal(false);
-            setSelectedProductId(null);
-          }}
-          productId={selectedProductId || undefined}
-          entityType="menu"
-        />
-
-        {/* Login Required Modal */}
-        <LoginRequiredModal
-          isOpen={showLoginModal}
-          onClose={() => setShowLoginModal(false)}
-          message="Please Login / Register to continue"
-          returnUrl="/menu/restaurant"
-        />
       </section>
     );
   };
