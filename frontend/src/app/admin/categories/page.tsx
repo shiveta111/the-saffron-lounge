@@ -239,9 +239,6 @@ export default function CategoryManagementPage() {
           </div>
           <p className="text-gray-600 mt-1">
             Organize menu items with hierarchical categories
-            <br></br>
-                        Organize menu items with hierarchical categories
-
             <span className="ml-2 text-blue-600 font-medium">({categories.length} total categories)</span>
           </p>
         </div>
